@@ -1,34 +1,34 @@
-const mongoose = require('mongoose'),
+const mongoose = require("mongoose"),
     Schema = mongoose.Schema;
 const uniqueValidator = require('mongoose-unique-validator');
-const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
-const secret = require('../config').secret;
+const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
+const secret = require("../config").secret;
 
 const UsuarioSchema = new mongoose.Schema({
     nome: {
         type: String,
-        required: [true, 'não pode ficar vazio.']
+        required: [true, "não pode ficar vazio."]
     },
     email: {
         type: String,
         lowercase: true,
         unique: true,
-        required: [true, 'não pode ficar vazio.'],
+        required: [true, "não pode ficar vazio."],
         index: true,
-        //  match: [/\S+@\S+\.\S+\, 'é inválido.']
+        match: [/\S+@\S+\.\S+/, 'é inválido.']
     },
     loja: {
         type: Schema.Types.ObjectId,
-        ref: 'Loja',
-        required: [true, 'não pode ficar vazia.']
+        ref: "Loja",
+        required: [true, "não pode ficar vazia."]
     },
     permissao: {
         type: Array,
-        default: ['cliente']
+        default: ["cliente"]
     },
-    hash: String,
-    salt: String,
+    hash: { type: String },
+    salt: { type: String },
     recovery: {
         type: {
             token: String,
@@ -38,15 +38,15 @@ const UsuarioSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-UsuarioSchema.plugin(uniqueValidator, { message: 'Já está sendo utilizado' });
+UsuarioSchema.plugin(uniqueValidator, { message: "já está sendo utilizado" });
 
 UsuarioSchema.methods.setSenha = function (password) {
-    this.salt = crypto.randomBytes(16).toString('hex');
-    this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+    this.salt = crypto.randomBytes(16).toString("hex");
+    this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, "sha512").toString("hex");
 };
 
 UsuarioSchema.methods.validarSenha = function (password) {
-    const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex')
+    const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, "sha512").toString("hex");
     return hash === this.hash;
 };
 
@@ -74,12 +74,12 @@ UsuarioSchema.methods.enviarAuthJSON = function () {
     };
 };
 
-//RECUPERAÇÃO
+// RECUPERACAO
 UsuarioSchema.methods.criarTokenRecuperacaoSenha = function () {
     this.recovery = {};
-    this.recovery.token = crypto.randomBytes(16).toString('hex');
+    this.recovery.token = crypto.randomBytes(16).toString("hex");
     this.recovery.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-    return this.recovery
+    return this.recovery;
 };
 
 UsuarioSchema.methods.finalizarTokenRecuperacaoSenha = function () {
@@ -87,4 +87,4 @@ UsuarioSchema.methods.finalizarTokenRecuperacaoSenha = function () {
     return this.recovery;
 };
 
-module.exports = mongoose.model('Usuario', UsuarioSchema);
+module.exports = mongoose.model("Usuario", UsuarioSchema);
