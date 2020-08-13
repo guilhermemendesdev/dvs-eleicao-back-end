@@ -10,10 +10,10 @@ const clienteController = new ClienteController();
 
 // ADM
 router.get("/", auth.required, LojaValidation.adm, validate(ClienteValidation.index), clienteController.index);
-//router.get("/search/:search/pedidos", auth.required, LojaValidation.adm, validate(ClienteValidation.searchPedidos), clienteController.searchPedidos);
+router.get("/search/:search/pedidos", auth.required, LojaValidation.adm, validate(ClienteValidation.searchPedidos), clienteController.searchPedidos);
 router.get("/search/:search", auth.required, LojaValidation.adm, validate(ClienteValidation.search), clienteController.search);
 router.get("/adm/:id", auth.required, LojaValidation.adm, validate(ClienteValidation.showAdm), clienteController.showAdm);
-//router.get("/adm/:id/pedidos", auth.required, LojaValidation.adm, validate(ClienteValidation.showPedidosCliente), clienteController.showPedidosCliente);
+router.get("/adm/:id/pedidos", auth.required, LojaValidation.adm, validate(ClienteValidation.showPedidosCliente), clienteController.showPedidosCliente);
 
 //router.delete("/adm/:id", auth.required, LojaValidation.adm, clienteController.removeAdm);
 
