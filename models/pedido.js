@@ -9,6 +9,7 @@ const PedidoSchema = Schema({
             produto: { type: Schema.Types.ObjectId, ref: 'Produto', required: true },
             variacao: { type: Schema.Types.ObjectId, ref: 'Variacao', required: true },
             produtoEstatico: { type: String },
+            quantidade: { type: Number, required: true },
             precoUnitario: { type: Number, required: true }
         }]
     },
