@@ -10,6 +10,7 @@ const RegistroPedido = mongoose.model('RegistroPedido');
 
 const CarrinhoValidation = require('./validacoes/carrinhoValidation');
 const { calcularFrete } = require('./integracoes/correios');
+const PagamentoValidation = require('./validacoes/pagamentoValidation');
 const EntregaValidation = require('./validacoes/entregaValidation');
 
 class PedidoController {
@@ -152,6 +153,7 @@ class PedidoController {
     async store(req, res, next) {
         const { carrinho, pagamento, entrega } = req.body;
         const { loja } = req.query;
+        const _carrinho = carrinho.slice();
 
         try {
 
@@ -164,13 +166,17 @@ class PedidoController {
             if (!await EntregaValidation.checarValorPrazo(cliente.endereco.CEP, carrinho, entrega)) return res.status(422).send({ error: 'Dados de entrega inválidos' });
 
             //CHEGAR DADOS DO PAGAMENTO
-            // if (!PagamentoValidation(carrinho, pagamento)) return res.status(422).send({ error: 'Dados de pagamento inválidos' });
+            if (!await PagamentoValidation.checarValorTotal({ carrinho, entrega, pagamento })) return res.status(422).send({ error: 'Dados de pagamento inválidos' });
+            if (!PagamentoValidation.checarCartao(pagamento)) return res.status(400).send({ error: 'Dados de pagamento com cartão inválido' });
 
             const novoPagamento = new Pagamento({
                 valor: pagamento.valor,
+                parcelas: pagamento.parcelas || 1,
                 forma: pagamento.forma,
                 status: 'Iniciando',
-                payload: pagamento,
+                endereco: pagamento.endereco,
+                cartao: pagamento.cartao,
+                enderecoEntregaIgualCobranca: pagamento.enderecoEntregaIgualCobranca,
                 loja
             });
 
@@ -179,13 +185,13 @@ class PedidoController {
                 custo: entrega.custo,
                 prazo: entrega.prazo,
                 tipo: entrega.tipo,
-                payload: entrega,
+                endereco: entrega.endereco,
                 loja
             });
 
             const pedido = new Pedido({
                 cliente: cliente._id,
-                carrinho,
+                carrinho: _carrinho,
                 pagamento: novoPagamento._id,
                 entrega: novaEntrega._id,
                 loja

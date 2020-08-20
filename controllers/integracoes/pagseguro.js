@@ -1,10 +1,10 @@
-const pagSeguroConfig = require('../../config/pagseguro');
-const PagSeguro = require('../../helpers/pagseguro')
+const pagSeguroConfig = require("../../config/pagseguro");
+const PagSeguro = require("../../helpers/pagseguro");
 
 const _criarPagamentoComBoleto = (senderHash, { cliente, carrinho, entrega, pagamento }) => {
-    return new Promise((resolve, rejeitar) => {
-        const pag = new PagSeguro(pagSeguroConfig);
+    return new Promise((resolver, rejeitar) => {
 
+        const pag = new PagSeguro(pagSeguroConfig);
         pag.setSender({
             name: cliente.nome,
             email: cliente.usuario.email,
@@ -21,7 +21,7 @@ const _criarPagamentoComBoleto = (senderHash, { cliente, carrinho, entrega, paga
             city: entrega.endereco.cidade,
             state: entrega.endereco.estado,
             postal_code: entrega.endereco.CEP.replace(/-/g, ""),
-            same_for_billing: pagamento.enderecoEntregaIgualCobranca // true or false
+            same_for_billing: pagamento.enderecoEntregaIgualCobranca // true ou false
         });
 
         pag.setBilling({
@@ -40,10 +40,9 @@ const _criarPagamentoComBoleto = (senderHash, { cliente, carrinho, entrega, paga
                 description: `${item.produto.titulo} - ${item.variacao.nome}`
             });
         });
-
         pag.addItem({
             qtde: 1,
-            valur: entrega.custo,
+            value: entrega.custo,
             description: `Custo de Entrega - Correios`
         });
 
@@ -53,17 +52,19 @@ const _criarPagamentoComBoleto = (senderHash, { cliente, carrinho, entrega, paga
             installments: 1,
             hash: senderHash
         }, (err, data) => (err) ? rejeitar(err) : resolver(data));
+
     });
 }
 
 const _criarPagamentoComCartao = (senderHash, { cliente, carrinho, entrega, pagamento }) => {
     return new Promise((resolver, rejeitar) => {
+
         const pag = new PagSeguro(pagSeguroConfig);
 
         pag.setSender({
             name: cliente.nome,
             email: cliente.usuario.email,
-            cpf_cnpj: cliente.cpf.replace(/[-/.]/g, ""),
+            cpf_cnpj: cliente.cpf.replace(/[-\.]/g, ""),
             area_code: cliente.telefones[0].slice(0, 2),
             phone: cliente.telefones[0].slice(2).trim().split(" ").join(""),
             birth_date: cliente.dataDeNascimento // formato DD/MM/YYYY
@@ -76,26 +77,25 @@ const _criarPagamentoComCartao = (senderHash, { cliente, carrinho, entrega, paga
             city: entrega.endereco.cidade,
             state: entrega.endereco.estado,
             postal_code: entrega.endereco.CEP.replace(/-/g, ""),
-            same_for_billing: pagamento.enderecoEntregaIgualCobranca // true or false
+            same_for_billing: pagamento.enderecoEntregaIgualCobranca // true ou false
         });
 
         pag.setBilling({
             street: pagamento.endereco.local,
-            number: pagamento.endereco.number,
+            number: pagamento.endereco.numero,
             district: pagamento.endereco.bairro,
             city: pagamento.endereco.cidade,
             state: pagamento.endereco.estado,
             postal_code: pagamento.endereco.CEP.replace(/-/g, "")
         });
 
-        carrinho, forEach(item => {
+        carrinho.forEach(item => {
             pag.addItem({
                 qtde: item.quantidade,
                 value: item.precoUnitario,
                 description: `${item.produto.titulo} - ${item.variacao.nome}`
             });
         });
-
         pag.addItem({
             qtde: 1,
             value: entrega.custo,
@@ -110,6 +110,7 @@ const _criarPagamentoComCartao = (senderHash, { cliente, carrinho, entrega, paga
             cpf_cnpj: (pagamento.cartao.cpf || cliente.cpf).replace(/[-\.]/g, "")
         });
 
+        console.log(72.3 % 2)
         pag.sendTransaction({
             method: "creditCard",
             value: pagamento.valor % 2 !== 0 && pagamento.parcelas !== 1 ? pagamento.valor + 0.01 : pagamento.valor,
@@ -117,26 +118,23 @@ const _criarPagamentoComCartao = (senderHash, { cliente, carrinho, entrega, paga
             hash: senderHash,
             credit_card_token: pagamento.cartao.credit_card_token
         }, (err, data) => (err) ? rejeitar(err) : resolver(data));
+
+
     });
 }
 
 const criarPagamento = async (senderHash, data) => {
     try {
-        if (data.pagamento.forma === 'boleto') return await _criarPagamentoComBoleto(senderHash, data);
-        else if (data.pagamento.forma === 'creditCard') return await _criarPagamentoComCartao(senderHash, data);
-        else return { errorMessage: "Forma de pagamento não encontrada" };
+        if (data.pagamento.forma === "boleto") return await _criarPagamentoComBoleto(senderHash, data);
+        else if (data.pagamento.forma === "creditCard") return await _criarPagamentoComCartao(senderHash, data);
+        else return { errorMessage: "Forma de pagamento não encontrada." };
+
     } catch (e) {
         console.log(e);
         return { errorMessage: "Ocorreu um erro", errors: e };
     }
 }
 
-const getTransactionStatus = () => {
-    return new Promise((resolver, rejeitar) => {
-        const pag = new PagSeguro(pagSeguroConfig);
-        pag.transactionStatus(codigo, (err, result) => (err) ? rejeitar(err) : resolver(result));
-    });
-}
 
 const getSessionId = () => {
     return new Promise((resolver, rejeitar) => {
@@ -145,8 +143,17 @@ const getSessionId = () => {
     })
 }
 
+
+const getTransactionStatus = (codigo) => {
+    return new Promise((resolver, rejeitar) => {
+        const pag = new PagSeguro(pagSeguroConfig);
+        pag.transactionStatus(codigo, (err, result) => (err) ? rejeitar(err) : resolver(result));
+    });
+}
+
+
 const getNotification = (codigo) => {
-    return new Promisse((resolver, rejeitar) => {
+    return new Promise((resolver, rejeitar) => {
         const pag = new PagSeguro(pagSeguroConfig);
         pag.getNotification(codigo, (err, result) => (err) ? rejeitar(err) : resolver(result));
     });
@@ -157,4 +164,4 @@ module.exports = {
     getSessionId,
     getTransactionStatus,
     getNotification
-}
+};  

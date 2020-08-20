@@ -1,5 +1,5 @@
 const request = require('request');
-const xmlParser = require('xml2js');
+const parser = require('fast-xml-parser');
 
 const pagseguro = function (params) {
     this.email = params.email;
@@ -122,10 +122,10 @@ pagseguro.prototype.sendTransaction = function (transaction, cb) {
         if (err) {
             return cb(err, false);
         } else if (response.statusCode == 200) {
-            const json = JSON.parse(xmlParser.toJson(body));
+            const json = parser.parse(body);
             return cb(false, json.transaction);
         } else {
-            const json = JSON.parse(xmlParser.toJson(body));
+            const json = parser.parse(body);
             if (json.errors && json.errors.error) {
                 return cb(json.errors.error, false);
             }
@@ -144,10 +144,10 @@ pagseguro.prototype.getNotification = function (notificationCode, cb) {
         if (err) {
             return cb(err, false);
         } else if (response.statusCode === 200) {
-            const json = JSON.parse(xmlParser.toJson(body));
+            const json = parser.parse(body);
             return cb(false, json.transaction);
         } else {
-            const json = JSON.parse(xmlParser.toJson(body));
+            const json = parser.parse(body);
             if (json.errors && json.errors.error) {
                 return cb(json.errors.error, false);
             }
@@ -163,10 +163,10 @@ pagseguro.prototype.sessionId = function (cb) {
         if (err) {
             return cb(err, false);
         } else if (response.statusCode == 200) {
-            const json = JSON.parse(xmlParser.toJson(body));
+            const json = parser.parse(body);
             return cb(false, json.session.id);
         } else {
-            const json = JSON.parse(xmlParser.toJson(body));
+            const json = parser.parse(body);
             if (json.errors && json.errors.error) {
                 return cb(json.errors.error, false);
             }
@@ -181,7 +181,7 @@ pagseguro.prototype.transactionStatus = function (code, cb) {
         if (err) {
             return cb(err, false);
         } else if (response.statusCode == 200) {
-            const json = JSON.parse(xmlParser.toJson(body));
+            const json = parser.parse(body);
 
             let status = '';
             switch (json.transaction.status) {
@@ -200,7 +200,7 @@ pagseguro.prototype.transactionStatus = function (code, cb) {
                 date: json.transaction.date
             });
         } else {
-            const json = JSON.parse(xmlParser.toJson(body));
+            const json = parser.parse(body);
             if (json.errors && json.errors.error) {
                 return cb(json.errors.error, false);
             }
