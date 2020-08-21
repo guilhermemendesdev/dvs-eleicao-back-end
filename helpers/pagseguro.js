@@ -185,13 +185,13 @@ pagseguro.prototype.transactionStatus = function (code, cb) {
 
             let status = '';
             switch (json.transaction.status) {
-                case '1': status = 'Aguardando Pagamento'; break;
-                case '2': status = 'Em Análise'; break;
-                case '3': status = 'Paga'; break;
-                case '4': status = 'Disponível'; break;
-                case '5': status = 'Em Disputa'; break;
-                case '6': status = 'Devolvida'; break;
-                case '7': status = 'Cancelada'; break;
+                case 1: status = 'Aguardando Pagamento'; break;
+                case 2: status = 'Em Análise'; break;
+                case 3: status = 'Paga'; break;
+                case 4: status = 'Disponível'; break;
+                case 5: status = 'Em Disputa'; break;
+                case 6: status = 'Devolvida'; break;
+                case 7: status = 'Cancelada'; break;
             }
 
             return cb(false, {

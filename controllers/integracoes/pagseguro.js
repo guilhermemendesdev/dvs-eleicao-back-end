@@ -110,7 +110,6 @@ const _criarPagamentoComCartao = (senderHash, { cliente, carrinho, entrega, paga
             cpf_cnpj: (pagamento.cartao.cpf || cliente.cpf).replace(/[-\.]/g, "")
         });
 
-        console.log(72.3 % 2)
         pag.sendTransaction({
             method: "creditCard",
             value: ((pagamento.valor % 2).toFixed(2) * 100) % 2 !== 0 && pagamento.parcelas !== 1 ? pagamento.valor + 0.01 : pagamento.valor,
@@ -145,6 +144,7 @@ const getSessionId = () => {
 
 
 const getTransactionStatus = (codigo) => {
+
     return new Promise((resolver, rejeitar) => {
         const pag = new PagSeguro(pagSeguroConfig);
         pag.transactionStatus(codigo, (err, result) => (err) ? rejeitar(err) : resolver(result));

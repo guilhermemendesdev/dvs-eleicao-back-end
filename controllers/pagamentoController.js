@@ -10,39 +10,41 @@ const RegistroPedido = mongoose.model('RegistroPedido');
 
 class PagamentoController {
 
-    //CLIENTES
+    // CLIENTES
     async show(req, res, next) {
         try {
             const pagamento = await Pagamento.findOne({ _id: req.params.id, loja: req.query.loja });
-            if (!pagamento) return res.status(400).send({ error: "Pagamento não existe" });
+            if (!pagamento) return res.status(400).send({ error: "Pagamento nao existe" });
 
             const registros = await RegistroPedido.find({ pedido: pagamento.pedido, tipo: "pagamento" });
 
             const situacao = (pagamento.pagSeguroCode) ? await getTransactionStatus(pagamento.pagSeguroCode) : null;
 
             if (
-                situacao && (
-                    registros.lenght === 0 ||
-                    !registros[registros.lenght - 1].payload ||
-                    !registros[registros.lenght - 1].payload.code ||
-                    registros[registros.lenght - 1].payload.code !== situacao.code
+                situacao &&
+                (
+                    registros.length === 0 ||
+                    !registros[registros.length - 1].payload ||
+                    !registros[registros.length - 1].payload.code ||
+                    registros[registros.length - 1].payload.code !== situacao.code
                 )
             ) {
                 const registroPedido = new RegistroPedido({
                     pedido: pagamento.pedido,
                     tipo: "pagamento",
-                    situacao: situacao.status || 'Situacao',
+                    situacao: situacao.status || "Situacao",
                     payload: situacao
                 });
+
                 pagamento.status = situacao.status;
-                await Pagamento.save();
+                await pagamento.save();
                 await registroPedido.save();
                 registros.push(registroPedido);
             }
-
+            // return res.send({ pagamento: { ...pagamento._doc, payload: null }, registros, situacao });
             return res.send({ pagamento, registros, situacao });
         } catch (e) {
-            next(e)
+            next(e);
         }
     }
 
