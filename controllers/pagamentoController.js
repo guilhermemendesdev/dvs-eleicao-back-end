@@ -9,6 +9,7 @@ const Variacao = mongoose.model('Variacao');
 const RegistroPedido = mongoose.model('RegistroPedido');
 
 const EmailController = require('./EmailController');
+const QuantidadeValidation = require('./validacoes/quantidadeValidation')
 
 class PagamentoController {
 
@@ -98,8 +99,11 @@ class PagamentoController {
 
             const pedido = await Pedido.findById(pagamento.pedido).populate({ path: 'cliente', populate: 'usuario' })
             EmailController.atualizarPedido({ usuario: pedido.cliente.usuario, pedido, tipo: 'pagamento', status, data: new Date() })
+
             await pagamento.save();
 
+            if (status.toLowerCase().includes('pago')) await QuantidadeValidation.atualizarQuantidade("confirmar_pedido", pedido);
+            else if (status.toLowerCase().includes('cancelado')) await QuantidadeValidation.atualizarQuantidade("cancelar_pedido", pedido);
             return res.send({ pagamento })
         } catch (e) {
             next(e)
@@ -150,6 +154,8 @@ class PagamentoController {
                 const pedido = await Pedido.findById(pagamento.pedido).populate({ path: 'cliente', populate: 'usuario' })
                 EmailController.atualizarPedido({ usuario: pedido.cliente.usuario, pedido, tipo: 'pagamento', status: situacao.status, data: new Date() })
 
+                if (status.toLowerCase().includes('pago')) await QuantidadeValidation.atualizarQuantidade("confirmar_pedido", pedido);
+                else if (status.toLowerCase().includes('cancelado')) await QuantidadeValidation.atualizarQuantidade("cancelar_pedido", pedido);
             }
             return res.send({ success: true });
         } catch (e) {
