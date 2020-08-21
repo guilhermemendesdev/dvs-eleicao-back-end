@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+const Usuario = mongoose.model('Usuario');
 const Pedido = mongoose.model('Pedido');
 const Produto = mongoose.model('Produto');
 const Variacao = mongoose.model('Variacao');
@@ -7,6 +8,8 @@ const Pagamento = mongoose.model('Pagamento');
 const Entrega = mongoose.model('Entrega');
 const Cliente = mongoose.model('Cliente');
 const RegistroPedido = mongoose.model('RegistroPedido');
+
+const EmailController = require('./EmailController');
 
 const CarrinhoValidation = require('./validacoes/carrinhoValidation');
 const { calcularFrete } = require('./integracoes/correios');
@@ -65,12 +68,9 @@ class PedidoController {
     //delete /adm/:id
     async removeAdm(req, res, next) {
         try {
-            const pedido = await Pedido.findOne({ loja: req.query.loja, _id: req.params.id });
+            const pedido = await Pedido.findOne({ loja: req.query.loja, _id: req.params.id }).populate({ path: 'cliente', populate: 'usuario' });
             if (!pedido) return res.status(400).send({ error: "Pedido não encontrado" });
             pedido.cancelado = true;
-
-            //Registro de atividade = pedido cancelado
-            //Enviar Email para cliente = pedido cancelado
 
             const registroPedido = new RegistroPedido({
                 pedido: pedido._id,
@@ -78,6 +78,8 @@ class PedidoController {
                 situacao: "pedido_cancelado"
             });
             await registroPedido.save();
+
+            EmailController.cancelarPedido({ usuario: pedido.cliente.usuario, pedido })
 
             await pedido.save();
 
@@ -210,7 +212,12 @@ class PedidoController {
             });
             await registroPedido.save();
 
-            //Notificar via email - cliente e adm = novo pedido
+            EmailController.enviarNovoPedido({ pedido, usuario: cliente.usuario })
+            const administradores = await Usuario.find({ permissao: 'adm', loja })
+
+            administradores.forEach((adm) => {
+                EmailController.enviarNovoPedido({ pedido, usuario: adm })
+            })
 
             return res.send({ pedido: Object.assign({}, pedido._doc, { entrega: novaEntrega, pagamento: novoPagamento, cliente }) })
         } catch (e) {
@@ -227,15 +234,17 @@ class PedidoController {
             if (!pedido) return res.status(400).send({ error: "Pedido não encontrado" });
             pedido.cancelado = true;
 
-            //Registro de atividade = pedido cancelado
-            //Enviar Email para cliente = pedido cancelado
-
             const registroPedido = new RegistroPedido({
                 pedido: pedido._id,
                 tipo: "pedido",
                 situacao: "pedido_cancelado"
             });
             await registroPedido.save();
+
+            const administradores = await Usuario.find({ permissao: 'adm', loja: pedido.loja });
+            administradores.forEach((adm) => {
+                EmailController.cancelarPedido({ pedido, usuario: adm })
+            })
 
             await pedido.save();
             return res.send({ cancelado: true })
