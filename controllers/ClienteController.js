@@ -127,6 +127,17 @@ class ClienteController {
         }
     }
 
+    async removeAdm(req, res, next) {
+        try {
+            const cliente = await Cliente.findById(req.params.id).populate("usuario");
+            if (!cliente) return res.status(400).send({ error: "Cliente nao encontrado." })
+            await cliente.usuario.remove();
+            await cliente.remove();
+            return res.send({ deletado: true });
+        } catch (e) {
+            next(e);
+        }
+    }
 
     /*
      * CLIENTE

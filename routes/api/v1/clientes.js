@@ -15,7 +15,7 @@ router.get("/search/:search", auth.required, LojaValidation.adm, validate(Client
 router.get("/adm/:id", auth.required, LojaValidation.adm, validate(ClienteValidation.showAdm), clienteController.showAdm);
 router.get("/adm/:id/pedidos", auth.required, LojaValidation.adm, validate(ClienteValidation.showPedidosCliente), clienteController.showPedidosCliente);
 
-//router.delete("/adm/:id", auth.required, LojaValidation.adm, clienteController.removeAdm);
+router.delete("/adm/:id", auth.required, LojaValidation.adm, clienteController.removeAdm);
 
 router.put("/adm/:id", auth.required, LojaValidation.adm, validate(ClienteValidation.updateAdm), clienteController.updateAdm);
 
