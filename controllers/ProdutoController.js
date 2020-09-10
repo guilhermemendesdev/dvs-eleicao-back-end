@@ -2,18 +2,18 @@ const mongoose = require('mongoose');
 
 const Produto = mongoose.model('Produto');
 const Categoria = mongoose.model('Categoria');
-const Avaliacoes = mongoose.model('Avaliacao');
-const Variacoes = mongoose.model('Variacao')
+const Avaliacao = mongoose.model('Avaliacao');
+const Variacao = mongoose.model('Variacao')
 
 const getSort = (sortType) => {
     switch (sortType) {
-        case "alfabetica_a_z":
+        case "alfabetica_a-z":
             return { titulo: 1 };
-        case "alfabetica_z_a":
+        case "alfabetica_z-a":
             return { titulo: -1 };
         case "preco-crescente":
             return { preco: 1 };
-        case "preco-descrescente":
+        case "preco-decrescente":
             return { preco: -1 };
         default:
             return {};
@@ -54,7 +54,7 @@ class ProdutoController {
 
     //PUT /:id
     async update(req, res, next) {
-        const { titulo, descricao, disponibilidade, categoria, preco, promocao, sku } = req.body;
+        const { titulo, descricao, disponibilidade, fotos, categoria, preco, promocao, sku } = req.body;
         const { loja } = req.query;
 
         try {
@@ -64,20 +64,21 @@ class ProdutoController {
             if (titulo) produto.titulo = titulo;
             if (descricao) produto.descricao = descricao;
             if (disponibilidade !== undefined) produto.disponibilidade = disponibilidade;
+            if (fotos) produto.fotos = fotos;
             if (preco) produto.preco = preco;
             if (promocao) produto.promocao = promocao;
             if (sku) produto.sku = sku;
 
             if (categoria && categoria.toString() !== produto.categoria.toString()) {
                 const oldCategoria = await Categoria.findById(produto.categoria);
-                const newCateogira = await Categoria.findById(categoria);
+                const newCategoria = await Categoria.findById(categoria);
 
                 if (oldCategoria && newCategoria) {
-                    oldCategoria.produtos = oldCategoria.produtos.filter(item => item !== produto._id);
+                    oldCategoria.produtos = oldCategoria.produtos.filter(item => item.toString() !== produto._id.toString());
                     newCategoria.produtos.push(produto._id);
                     produto.categoria = categoria;
                     await oldCategoria.save();
-                    await newCategorai.save();
+                    await newCategoria.save();
                 } else if (newCategoria) {
                     newCategoria.produtos.push(produto._id);
                     produto.categoria = categoria;
@@ -140,7 +141,7 @@ class ProdutoController {
         try {
             const produtos = await Produto.paginate(
                 { loja: req.query.loja },
-                { offset, limit, sort: getSort(req.query.sortType) }
+                { offset, limit, sort: getSort(req.query.sortType), populate: ['categoria'] }
             );
             return res.send({ produtos });
         } catch (e) {
@@ -178,7 +179,7 @@ class ProdutoController {
                         { 'sku': { $regex: search } },
                     ]
                 },
-                { offset, limit, sort: getSort(req.query.sortType) }
+                { offset, limit, sort: getSort(req.query.sortType), populate: ['categoria'] }
             );
             return res.send({ produtos });
         } catch (e) {
@@ -192,8 +193,8 @@ class ProdutoController {
             const produto = await Produto
                 .findById(req.params.id)
                 .populate([
-                    'avaliacoes',
-                    'variacoes',
+                    'avaliacao',
+                    'variacao',
                     'loja']);
             return res.send({ produto })
         } catch (e) {
@@ -205,7 +206,7 @@ class ProdutoController {
     //GET /:id/avaliacoes
     async showAvaliacoes(req, res, next) {
         try {
-            const avaliacoes = await Avaliacoes.find({ produto: req.params.id });
+            const avaliacoes = await Avaliacao.find({ produto: req.params.id });
             return res.send({ avaliacoes })
         } catch (e) {
             next(e)
@@ -216,7 +217,7 @@ class ProdutoController {
     //GET /:id/variacoes
     async showVariacoes(req, res, next) {
         try {
-            const variacoes = await Variacoes.find({ produto: req.params.id });
+            const variacoes = await Variacao.find({ produto: req.params.id });
             return res.send({ variacoes })
         } catch (e) {
             next(e)
