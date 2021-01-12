@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3000;
 
 // ARQUIVOS ESTATICOS
 app.use("/public", express.static(__dirname + "/public"));
-app.use("/public/images", express.static(__dirname + "/public/images"));
+app.use("/public/doc__inscricao", express.static(__dirname + "/public/doc__inscricao"));
 
 // SETUP MONGODB
 const dbs = require("./config/database");

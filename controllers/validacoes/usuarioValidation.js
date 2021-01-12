@@ -11,21 +11,20 @@ const UsuarioValidation = {
     store: {
         body: {
             nome: Joi.string().required(),
-            email: Joi.string().email().required(),
+            cpf: Joi.string().length(14).required(),
             password: Joi.string().required(),
-            loja: Joi.string().alphanum().length(24).required()
         }
     },
     update: {
         body: {
             nome: Joi.string().optional(),
-            email: Joi.string().email().optional(),
+            cpf: Joi.string().length(14).optional(),
             password: Joi.string().optional()
         }
     },
     login: {
         body: {
-            email: Joi.string().email().required(),
+            cpf: Joi.string().length(14).required(),
             password: Joi.string().required()
         }
     }

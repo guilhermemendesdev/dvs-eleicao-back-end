@@ -8,21 +8,21 @@ module.exports = ({ usuario, recovery }, cb) => {
     <p>
         Aqui está o link para redefinir a sua senha. Acesse ele e digite sua nova senha:
     </p>
-   <a href="${link}/v1/api/usuarios/senha-recuperada?token=${recovery.token}">
-            ${link}/v1/api/usuarios/senha-recuperada?token=${recovery.token}
+   <a href="${link}/api/v1/usuarios/senha-recuperada?token=${recovery.token}">
+            ${link}/api/v1/usuarios/senha-recuperada?token=${recovery.token}
         </a>
     <br/><br/><hr/>
     <p>
         Obs.: Se você não solicitou a redefinição, apena ignore esse email.
     </p>
     <br />
-    <p> Atenciosamente, Loja TI</p>
+    <p> Atenciosamente, Voluntários de coração</p>
     `;
 
     const opcoesEmail = {
-        from: 'naoresponder@lojati.com',
+        from: 'naoresponder@anapolis.go.gov.br',
         to: usuario.email,
-        subject: 'Redefinição de senha - Loja TI',
+        subject: 'Redefinição de senha - Voluntário de coração',
         html: message
     };
 
@@ -37,7 +37,6 @@ module.exports = ({ usuario, recovery }, cb) => {
         });
     }
     else {
-        console.log(opcoesEmail);
         return cb(null, "link para redefinição de senha foi enviado com sucesso.")
     }
 }

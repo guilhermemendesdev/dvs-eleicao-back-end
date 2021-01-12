@@ -25,12 +25,12 @@
                 <% }%>
 
                 <p>
-                    Digite seu email para receber as instruções de como reiniciar a sua senha
+                    Digite seu cpf para receber as instruções de como reiniciar a sua senha
                 </p>
 
-                <form action='/v1/api/usuarios/recuperar-senha' method="POST">
+                <form action='/api/v1/usuarios/recuperar-senha' method="POST">
                     <div class="form-group">
-                        <input type="email" name="email" class="form-control" placeholder="Digite seu e-mail" />
+                        <input type="cpf" name="cpf" class="form-control" placeholder="Digite seu CPF" />
                     </div>
                     <button class="btn btn-primary">
                         Recuperar Senha

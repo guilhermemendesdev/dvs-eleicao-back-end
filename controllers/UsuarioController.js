@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Usuario = mongoose.model('Usuario');
+const Candidatura = mongoose.model("Candidatura");
+const Portifolio = mongoose.model("Portifolio");
 const enviarEmailRecovery = require('../helpers/email-recovery');
 
 class UsuarioController {
@@ -12,17 +14,26 @@ class UsuarioController {
         }).catch(next);
     }
 
+    async indexAdm(req, res, next) {
+        try {
+            const usuarios = await Usuario.paginate();
+            return res.send({ usuarios });
+        } catch (e) {
+            next(e);
+        }
+    }
+
     //GET /:id
     show(req, res, next) {
-        Usuario.findById(req.params.id).populate({ path: "loja" })
+        Usuario.findById(req.params.id).populate()
             .then(usuario => {
                 if (!usuario) return res.status(401).json({ errors: "Usuario não registrado" });
                 return res.json({
                     usuario: {
                         nome: usuario.nome,
-                        email: usuario.email,
-                        permissao: usuario.permissao,
-                        loja: usuario.loja
+                        cpf: usuario.cpf,
+                        foto: usuario.foto,
+                        permissao: usuario.permissao
                     }
                 });
             }).catch(next);
@@ -30,9 +41,9 @@ class UsuarioController {
 
     //POST /registrar
     store(req, res, next) {
-        const { nome, email, password, loja } = req.body;
+        const { nome, cpf, email, password } = req.body;
 
-        const usuario = new Usuario({ nome, email, loja });
+        const usuario = new Usuario({ nome, cpf, email });
         usuario.setSenha(password);
 
         usuario.save()
@@ -45,10 +56,11 @@ class UsuarioController {
 
     //PUT /
     update(req, res, next) {
-        const { nome, email, password } = req.body;
+        const { nome, cpf, password, email } = req.body;
         Usuario.findById(req.payload.id).then((usuario) => {
             if (!usuario) return res.status(401).json({ errors: "Usuario não registrado" });
             if (typeof nome !== "undefined") usuario.nome = nome;
+            if (typeof cpf !== "undefined") usuario.cpf = cpf;
             if (typeof email !== "undefined") usuario.email = email;
             if (typeof password !== "undefined") usuario.setSenha(password);
 
@@ -56,6 +68,26 @@ class UsuarioController {
                 return res.json({ usuario: usuario.enviarAuthJSON() });
             }).catch(next);
         }).catch(next);
+    }
+
+    //PUT /images/:id
+    async updateImagem(req, res, next) {
+        try {
+            const usuario = await Usuario.findOne({ _id: req.params.id });
+            if (!usuario) return res.status(400).send({ error: "Usuário não encontrado." });
+
+            const image = usuario.fotos;
+            if (image) promisify(fs.unlink)(path.resolve(__dirname, '..', 'public', 'usuario', image))
+
+            const novasImagens = req.files.map(item => item.filename);
+            usuarios.fotos = novasImagens;
+
+            await usuarios.save();
+
+            return res.send({ usuarios });
+        } catch (e) {
+            next(e);
+        }
     }
 
     //DELETE /
@@ -68,10 +100,37 @@ class UsuarioController {
         }).catch(next)
     }
 
+    //GET /:search
+    async search(req, res, next) {
+        const search = new RegExp(req.params.search, 'i');
+        try {
+            const usuario = await Usuario.paginate(
+                { cpf: { $regex: search } },
+            );
+            return res.send({ usuario })
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async showCandidaturaVoluntario(req, res, next) {
+        try {
+            var candidaturas = await Candidatura.find({ voluntario: req.payload.id });
+
+            candidaturas = await Promise.all(candidaturas.map(async (candidatura) => {
+                candidatura.portifolio = await Portifolio.findById(candidatura.portifolio);
+                return candidatura;
+            }));
+            return res.send({ candidaturas });
+        } catch (e) {
+            next(e);
+        }
+    }
+
     //POST /login
     login(req, res, next) {
-        const { email, password } = req.body;
-        Usuario.findOne({ email }).then((usuario) => {
+        const { cpf, password } = req.body;
+        Usuario.findOne({ cpf }).then((usuario) => {
             if (!usuario) return res.status(401).json({ errors: "Usuario não registrado" });
             if (!usuario.validarSenha(password)) return res.status(401).json({ errors: "Senha inválida" });
             return res.json({ usuario: usuario.enviarAuthJSON() });
@@ -86,11 +145,11 @@ class UsuarioController {
 
     //POST /recuperar-senha
     createRecovery(req, res, next) {
-        const { email } = req.body;
-        if (!email) return res.render('recovery', { error: "Preencha com o seu email", success: null });
+        const { cpf } = req.body;
+        if (!cpf) return res.render('recovery', { error: "Preencha com o seu CPF", success: null });
 
-        Usuario.findOne({ email }).then((usuario) => {
-            if (!usuario) return res.render('recovery', { error: 'Não existe usuário com este email', success: null });
+        Usuario.findOne({ cpf }).then((usuario) => {
+            if (!usuario) return res.render('recovery', { error: 'Não existe usuário com este CPF', success: null });
             const recoveryData = usuario.criarTokenRecuperacaoSenha();
             return usuario.save().then(() => {
                 enviarEmailRecovery({ usuario, recovery: recoveryData }, (error = null, success = null) => {

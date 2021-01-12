@@ -4,28 +4,25 @@ const uniqueValidator = require('mongoose-unique-validator');
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const secret = require("../config").secret;
+const mongoosePaginate = require("mongoose-paginate");
 
 const UsuarioSchema = new mongoose.Schema({
     nome: {
         type: String,
         required: [true, "não pode ficar vazio."]
     },
-    email: {
-        type: String,
-        lowercase: true,
+    cpf: {
+        type: String, required: true,
         unique: true,
         required: [true, "não pode ficar vazio."],
         index: true,
-        match: [/\S+@\S+\.\S+/, 'é inválido.']
-    },
-    loja: {
-        type: Schema.Types.ObjectId,
-        ref: "Loja",
-        required: [true, "não pode ficar vazia."]
     },
     permissao: {
         type: Array,
-        default: ["cliente"]
+        default: ["candidato"]
+    },
+    foto: {
+        type: Array, default: []
     },
     hash: { type: String },
     salt: { type: String },
@@ -35,7 +32,11 @@ const UsuarioSchema = new mongoose.Schema({
             date: Date
         },
         default: {}
-    }
+    },
+    deletado: {
+        type: Boolean,
+        default: false
+    },
 }, { timestamps: true });
 
 UsuarioSchema.plugin(uniqueValidator, { message: "já está sendo utilizado" });
@@ -57,7 +58,7 @@ UsuarioSchema.methods.gerarToken = function () {
 
     return jwt.sign({
         id: this._id,
-        email: this.email,
+        cpf: this.cpf,
         nome: this.nome,
         exp: parseFloat(exp.getTime() / 1000, 10)
     }, secret);
@@ -67,8 +68,7 @@ UsuarioSchema.methods.enviarAuthJSON = function () {
     return {
         _id: this._id,
         nome: this.nome,
-        email: this.email,
-        loja: this.loja,
+        cpf: this.cpf,
         role: this.permissao,
         token: this.gerarToken()
     };
@@ -82,6 +82,7 @@ UsuarioSchema.methods.criarTokenRecuperacaoSenha = function () {
     return this.recovery;
 };
 
+UsuarioSchema.plugin(mongoosePaginate);
 UsuarioSchema.methods.finalizarTokenRecuperacaoSenha = function () {
     this.recovery = { token: null, date: null };
     return this.recovery;
