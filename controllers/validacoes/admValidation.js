@@ -6,7 +6,7 @@ const AdmValidation = {
         if (!req.payload.id) return res.sendStatus(401);
         Usuario.findById(req.payload.id).then(usuario => {
             if (!usuario) return res.sendStatus(401);
-            if (!usuario.permissao.includes("adm") && !usuario.permissao.includes("super-adm")) return res.sendStatus(401);
+            if (!usuario.permissao.includes("super-adm")) return res.sendStatus(401);
             next();
         }).catch(next);
     },

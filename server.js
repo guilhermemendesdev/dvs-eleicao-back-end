@@ -6,22 +6,30 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const cors = require("cors");
-
+const path = require('path');
 
 // START
 const app = express();
 
 // AMBIENTE
 const isProduction = process.env.NODE_ENV === "production";
-const PORT = process.env.PORT || 3000;
+const PORT = 3005;
 
 // ARQUIVOS ESTATICOS
 app.use("/public", express.static(__dirname + "/public"));
-app.use("/public/doc__inscricao", express.static(__dirname + "/public/doc__inscricao"));
+app.use("/public/doc__boletim", express.static(__dirname + "/public/doc__eleicao"));
+app.use('/fotosCandidato', express.static(path.resolve(__dirname, "tmp", "doc__eleicao", "candidatos")))
 
 // SETUP MONGODB
 const dbs = require("./config/database");
-const dbURI = isProduction ? dbs.dbProduction : dbs.dbTeste;
+
+// VERSÃO PRODUÇÃO
+// const dbURI = dbs.dbProduction;
+
+
+// VERSÃO TESTE
+const dbURI = dbs.dbTeste;
+
 mongoose.connect(dbURI, { useNewUrlParser: true });
 
 // SETUP EJS
@@ -55,6 +63,7 @@ app.use((err, req, res, next) => {
     if (err.status !== 404) console.warn("Error: ", err.message, new Date());
     res.json(err);
 });
+
 
 // ESCUTAR
 app.listen(PORT, (err) => {

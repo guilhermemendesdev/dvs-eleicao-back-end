@@ -1,4 +1,4 @@
 {
-    "dbTeste": "mongodb://localhost:27017/voluntariado-api-teste",
-    "dbProduction": "mongodb://localhost:27017/voluntariado-api"
+    "dbTeste": "mongodb://localhost:27017/eleicao-teste",
+    "dbProduction": "mongodb://localhost:27017/eleicao"
 }

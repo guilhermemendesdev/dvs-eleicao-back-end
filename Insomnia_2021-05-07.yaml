@@ -1,0 +1,454 @@
+_type: export
+__export_format: 4
+__export_date: 2021-05-07T15:04:18.823Z
+__export_source: insomnia.desktop.app:v2021.3.0
+resources:
+  - _id: req_1e27b9a2ee8c42e0835be1838a9f21bf
+    parentId: fld_c9b0094fe4a04cf6846b1eb12aa078f2
+    modified: 1620226308244
+    created: 1620226265786
+    url: http://localhost:3000/api/v1/usuarios/6092b0bb89a69c2dc8655cbd
+    name: Mostrar dados usuário por ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: Authorization
+        value: Bearer
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOTJhZmVjODlhNjljMmRjODY1NWNiYyIsImVtYWlsIjoiZ3VpbGhlcm1lbWVuZGVzb3VzYUBnbWFpbC5jb20iLCJub21lIjoiR3VpbGhlcm1lIGRlIFNvdXNhIE1lbmRlcyIsImV4cCI6MTYyMTUyMjExMy41NDcsImlhdCI6MTYyMDIyNjExM30.zC8He53Uy9R1lq_WWqMp8brUh-dfnKVrBsIYUsp-594
+        description: ""
+        id: pair_80dbf238b95f40498ca16509701f896f
+    authentication: {}
+    metaSortKey: -1620226265786
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_c9b0094fe4a04cf6846b1eb12aa078f2
+    parentId: fld_17a57b6e405c421eba017b50065bdc8f
+    modified: 1620225905804
+    created: 1620225905804
+    name: Usuários
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1620225905804
+    _type: request_group
+  - _id: fld_17a57b6e405c421eba017b50065bdc8f
+    parentId: wrk_d9d678d6d69d43629305a2baab73346a
+    modified: 1620225865677
+    created: 1620225865677
+    name: Eleições
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1620225865677
+    _type: request_group
+  - _id: wrk_d9d678d6d69d43629305a2baab73346a
+    parentId: null
+    modified: 1579032628240
+    created: 1579032628240
+    name: Insomnia
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_871f86ab415d44919e2cebcd6b4fd563
+    parentId: fld_c9b0094fe4a04cf6846b1eb12aa078f2
+    modified: 1620226250182
+    created: 1620226175698
+    url: http://localhost:3000/api/v1/usuarios
+    name: Mostrar dados Usuário Logado
+    description: ""
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters: []
+    headers:
+      - name: Authorization
+        value: Bearer
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOTJhZmVjODlhNjljMmRjODY1NWNiYyIsImVtYWlsIjoiZ3VpbGhlcm1lbWVuZGVzb3VzYUBnbWFpbC5jb20iLCJub21lIjoiR3VpbGhlcm1lIGRlIFNvdXNhIE1lbmRlcyIsImV4cCI6MTYyMTUyMjExMy41NDcsImlhdCI6MTYyMDIyNjExM30.zC8He53Uy9R1lq_WWqMp8brUh-dfnKVrBsIYUsp-594
+        description: ""
+        id: pair_525c5d14c8114739aedc096be6cd4e1c
+      - name: Content-Type
+        value: application/json
+        id: pair_8a6b2edbe94a4b59ba632e24debe83e5
+    authentication: {}
+    metaSortKey: -1620226175698
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_38b3a1f448f941fd90f41910936b93b3
+    parentId: fld_c9b0094fe4a04cf6846b1eb12aa078f2
+    modified: 1620226112536
+    created: 1620226087314
+    url: http://localhost:3000/api/v1/usuarios/login
+    name: Login
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "guilhermemendesousa@gmail.com",
+        	"password": "123456"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_aca8d29a9153498592fb856933e128c9
+    authentication: {}
+    metaSortKey: -1620226087314
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e2c2c63acaca41649a54ba8554f6da99
+    parentId: fld_c9b0094fe4a04cf6846b1eb12aa078f2
+    modified: 1620226154599
+    created: 1620226128664
+    url: http://localhost:3000/api/v1/usuarios/
+    name: Editar usuário
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "guilhermemendesousa@gmail.com",
+        	"password": "123456789"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_aca8d29a9153498592fb856933e128c9
+      - name: Authorization
+        value: Bearer
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOTJhZmVjODlhNjljMmRjODY1NWNiYyIsImVtYWlsIjoiZ3VpbGhlcm1lbWVuZGVzb3VzYUBnbWFpbC5jb20iLCJub21lIjoiR3VpbGhlcm1lIGRlIFNvdXNhIE1lbmRlcyIsImV4cCI6MTYyMTUyMjExMy41NDcsImlhdCI6MTYyMDIyNjExM30.zC8He53Uy9R1lq_WWqMp8brUh-dfnKVrBsIYUsp-594
+        description: ""
+        id: pair_dc9d3013d6b6444594d8acac646da059
+    authentication: {}
+    metaSortKey: -1620226000151
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_68c03fa1a9134fe9a37b159ceb191e75
+    parentId: fld_c9b0094fe4a04cf6846b1eb12aa078f2
+    modified: 1620226233249
+    created: 1620225912988
+    url: http://localhost:3000/api/v1/usuarios/registrar
+    name: Novo usuário
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"nome": "André Wisley",
+        	"email": "andre@gmail.com",
+        	"password": "123456"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_ae579429dae646489742d3916d995c6a
+    authentication: {}
+    metaSortKey: -1620225912988
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_aaa99d7fe31b4d1984c3847ca4c7fe02
+    parentId: fld_5c63baa28fa946288edb08c4d90fc088
+    modified: 1620228289864
+    created: 1620227084147
+    url: http://localhost:3000/api/v1/candidato/images/6092b8b0dd143a23b0b29a86
+    name: Inserir foto Candidato
+    description: ""
+    method: PUT
+    body:
+      mimeType: multipart/form-data
+      params:
+        - name: file
+          value: ""
+          description: ""
+          id: pair_0065d76a726b42f6a63674e43573cd18
+          type: file
+          fileName: C:\Users\guilhermesm-semed\Pictures\q1FEKlj4Xp2IjCQ8bTTfzK.png
+    parameters: []
+    headers:
+      - name: Authorization
+        value: Bearer
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOTJhZmVjODlhNjljMmRjODY1NWNiYyIsImVtYWlsIjoiZ3VpbGhlcm1lbWVuZGVzb3VzYUBnbWFpbC5jb20iLCJub21lIjoiR3VpbGhlcm1lIGRlIFNvdXNhIE1lbmRlcyIsImV4cCI6MTYyMTUyMjExMy41NDcsImlhdCI6MTYyMDIyNjExM30.zC8He53Uy9R1lq_WWqMp8brUh-dfnKVrBsIYUsp-594
+        description: ""
+        id: pair_77934d44290d4fbbbb320a011e6f484b
+      - name: Content-Type
+        value: multipart/form-data
+        id: pair_a7e170cabcd046adb190649f54bc8cda
+    authentication: {}
+    metaSortKey: -1620227084147
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_5c63baa28fa946288edb08c4d90fc088
+    parentId: fld_17a57b6e405c421eba017b50065bdc8f
+    modified: 1620225878139
+    created: 1620225878139
+    name: Candidato
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1620225878139
+    _type: request_group
+  - _id: req_c18508d59bdb4ddf9651fdb1aca1a7c6
+    parentId: fld_5c63baa28fa946288edb08c4d90fc088
+    modified: 1620237965483
+    created: 1620225885212
+    url: http://localhost:3000/api/v1/candidato/
+    name: Novo Candidato
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"nome": "Candidato Teste 2",
+        	"dt_nascimento": "1992-04-15",
+        	"cpf": "288.079.120-07",
+        	"email": "guilhermemendesousa@gmail.com",
+        	"rg": "2906644",
+        	"telefone": "(62) 9 98509956",
+        	"cargo": "Professora",
+          "funcao": "Coordenadora Geral",
+          "graduacao": true,
+          "curso_graduacao": "Pedagogia",
+          "pos_graduacao": true,
+          "curso_pos_graduacao": "Psicopedagogia",
+          "mestrado": false,
+          "curso_mestrado": "",
+          "doutorado": false,
+          "curso_doutorado": "",
+          "curso_gestor": false,
+          "obs_curso_gestor": "",
+          "outros_cursos": "",			
+          "data_entrada_inst": "1998-05-05",
+          "data_entrada_docencia": "2001-05-05",
+        	"endereco": {
+        		"cep": "75120-300",
+        		"rua": "Rua 10",
+        		"complemento": "Quadra 16 Lote 28A",
+        		"cidade": "Anápolis",
+        		"uf": "GO",
+        		"bairro": "Vila Góis",
+        		"numero": "S/N"
+        	}
+        }
+    parameters: []
+    headers:
+      - name: Authorization
+        value: Bearer
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOTJhZmVjODlhNjljMmRjODY1NWNiYyIsImVtYWlsIjoiZ3VpbGhlcm1lbWVuZGVzb3VzYUBnbWFpbC5jb20iLCJub21lIjoiR3VpbGhlcm1lIGRlIFNvdXNhIE1lbmRlcyIsImV4cCI6MTYyMTUyMjExMy41NDcsImlhdCI6MTYyMDIyNjExM30.zC8He53Uy9R1lq_WWqMp8brUh-dfnKVrBsIYUsp-594
+        description: ""
+        id: pair_e7ec10cc62d74f6bb8d9f1f72ce5aba7
+      - name: Content-Type
+        value: application/json
+        id: pair_354728a4f05a46bbb4b65a6784a20dc7
+    authentication: {}
+    metaSortKey: -1620225885212
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e3c24d0a4299468b9ad9ff67e90dec76
+    parentId: fld_5c63baa28fa946288edb08c4d90fc088
+    modified: 1620228369636
+    created: 1620227779095
+    url: http://localhost:3000/api/v1/candidato/6092b8b0dd143a23b0b29a86
+    name: Alterar dados Candidato
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"nome": "Marcelo Augusto David Coldzera",
+        	"dt_nascimento": "1992-04-15",
+        	"cpf": "288.079.120-07",
+        	"email": "guilhermemendesousa@gmail.com",
+        	"rg": "2906644",
+        	"telefone": "(62) 9 98509956",
+        	"endereco": {
+        		"cep": "75120-300",
+        		"rua": "Rua 10",
+        		"complemento": "Quadra 16 Lote 28A",
+        		"cidade": "Anápolis",
+        		"uf": "GO",
+        		"bairro": "Vila Góis",
+        		"numero": "S/N"
+        	}
+        }
+    parameters: []
+    headers:
+      - name: Authorization
+        value: Bearer
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOTJhZmVjODlhNjljMmRjODY1NWNiYyIsImVtYWlsIjoiZ3VpbGhlcm1lbWVuZGVzb3VzYUBnbWFpbC5jb20iLCJub21lIjoiR3VpbGhlcm1lIGRlIFNvdXNhIE1lbmRlcyIsImV4cCI6MTYyMTUyMjExMy41NDcsImlhdCI6MTYyMDIyNjExM30.zC8He53Uy9R1lq_WWqMp8brUh-dfnKVrBsIYUsp-594
+        description: ""
+        id: pair_e7ec10cc62d74f6bb8d9f1f72ce5aba7
+      - name: Content-Type
+        value: application/json
+        id: pair_354728a4f05a46bbb4b65a6784a20dc7
+    authentication: {}
+    metaSortKey: -1620034422772.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_854d43029d68457183c7542d81c3154b
+    parentId: fld_5c63baa28fa946288edb08c4d90fc088
+    modified: 1620227296857
+    created: 1620227293481
+    url: http://localhost:3000/api/v1/candidato/
+    name: Lista de Candidatos
+    description: ""
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters: []
+    headers:
+      - name: Authorization
+        value: Bearer
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOTJhZmVjODlhNjljMmRjODY1NWNiYyIsImVtYWlsIjoiZ3VpbGhlcm1lbWVuZGVzb3VzYUBnbWFpbC5jb20iLCJub21lIjoiR3VpbGhlcm1lIGRlIFNvdXNhIE1lbmRlcyIsImV4cCI6MTYyMTUyMjExMy41NDcsImlhdCI6MTYyMDIyNjExM30.zC8He53Uy9R1lq_WWqMp8brUh-dfnKVrBsIYUsp-594
+        description: ""
+        id: pair_e7ec10cc62d74f6bb8d9f1f72ce5aba7
+      - name: Content-Type
+        value: application/json
+        id: pair_354728a4f05a46bbb4b65a6784a20dc7
+    authentication: {}
+    metaSortKey: -1619842960332.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_98b2152a38e449b3bfb4d0c4ccabee29
+    parentId: fld_5c63baa28fa946288edb08c4d90fc088
+    modified: 1620227323864
+    created: 1620227315710
+    url: http://localhost:3000/api/v1/candidato/6092b33553729138284350d9
+    name: Buscar de candidato por ID
+    description: ""
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters: []
+    headers:
+      - name: Authorization
+        value: Bearer
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOTJhZmVjODlhNjljMmRjODY1NWNiYyIsImVtYWlsIjoiZ3VpbGhlcm1lbWVuZGVzb3VzYUBnbWFpbC5jb20iLCJub21lIjoiR3VpbGhlcm1lIGRlIFNvdXNhIE1lbmRlcyIsImV4cCI6MTYyMTUyMjExMy41NDcsImlhdCI6MTYyMDIyNjExM30.zC8He53Uy9R1lq_WWqMp8brUh-dfnKVrBsIYUsp-594
+        description: ""
+        id: pair_e7ec10cc62d74f6bb8d9f1f72ce5aba7
+      - name: Content-Type
+        value: application/json
+        id: pair_354728a4f05a46bbb4b65a6784a20dc7
+    authentication: {}
+    metaSortKey: -1619651497892.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_1ac8c13898a5664ac330c1b5da7c098766be1477
+    parentId: wrk_d9d678d6d69d43629305a2baab73346a
+    modified: 1611949872836
+    created: 1579032628299
+    name: Base Environment
+    data:
+      base_ecommerce: http://157.230.55.41:3001
+      base_graduacao: http://localhost:3000/api/v1
+      base_voluntariado: http://localhost:3000/api/v1
+      base_voluntariado-prod: http://api.anapolis.go.gov.br:4000/api/v1
+      base_url: http://localhost:3000
+      base_cultura: http://api.anapolis.go.gov.br:3000
+      base_cad_social: http://localhost:5000/api/v1
+      id: 5ecd26163ce300352834560f
+      api: http://finanstoque.gasistemasweb.com.br
+      token: Bearer
+        eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTM2MTI5MDcsImlzcyI6ImxvY2FsaG9zdCIsImV4cCI6MTYyNTE1OTg2NiwidXNlcklkIjoxLCJ1c2VybmFtZSI6ImFkbWluIn0.qPRTMyVhoA66vlvPiY9uody8jg6ahD-heCdS5ilJM6w
+    dataPropertyOrder:
+      "&":
+        - base_ecommerce
+        - base_graduacao
+        - base_voluntariado
+        - base_voluntariado-prod
+        - base_url
+        - base_cultura
+        - base_cad_social
+        - id
+        - api
+        - token
+    color: null
+    isPrivate: false
+    metaSortKey: 1579032628299
+    _type: environment
+  - _id: jar_1ac8c13898a5664ac330c1b5da7c098766be1477
+    parentId: wrk_d9d678d6d69d43629305a2baab73346a
+    modified: 1579032628306
+    created: 1579032628306
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_71c48e6786324365942ad48978cd4a94
+    parentId: wrk_d9d678d6d69d43629305a2baab73346a
+    modified: 1594641695845
+    created: 1594641695845
+    fileName: Insomnia
+    contents: ""
+    contentType: yaml
+    _type: api_spec

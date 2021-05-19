@@ -11,7 +11,7 @@ const UsuarioValidation = {
     store: {
         body: {
             nome: Joi.string().required(),
-            cpf: Joi.string().length(14).required(),
+            email: Joi.string().email().required(),
             password: Joi.string().required(),
         }
     },
@@ -24,8 +24,8 @@ const UsuarioValidation = {
     },
     login: {
         body: {
-            cpf: Joi.string().length(14).required(),
-            password: Joi.string().required()
+            inep: Joi.string().required(),
+            password: Joi.string().optional().allow('')
         }
     }
 };

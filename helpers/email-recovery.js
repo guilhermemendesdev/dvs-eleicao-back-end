@@ -20,23 +20,18 @@ module.exports = ({ usuario, recovery }, cb) => {
     `;
 
     const opcoesEmail = {
-        from: 'naoresponder@anapolis.go.gov.br',
+        from: 'guilhermesousa@edu.anapolis.go.gov.br',
         to: usuario.email,
         subject: 'Redefinição de senha - Voluntário de coração',
         html: message
     };
 
-    if (process.env.NODE_ENV === 'production') {
-        transporter.sendMail(opcoesEmail, (error, info) => {
-            if (error) {
-                console.log(error);
-                return cb('Aconteceu um erro no envio do email, tente novamente.');
-            } else {
-                return cb(null, 'Link para redefinição de senha foi enviado com sucesso para seu email.')
-            }
-        });
-    }
-    else {
-        return cb(null, "link para redefinição de senha foi enviado com sucesso.")
-    }
+    transporter.sendMail(opcoesEmail, (error, info) => {
+        if (error) {
+            console.log(error);
+            return cb('Aconteceu um erro no envio do email, tente novamente.');
+        } else {
+            return cb(null, 'Link para redefinição de senha foi enviado com sucesso para seu email.')
+        }
+    });
 }
