@@ -16,11 +16,16 @@ class ChapaController {
     */
 
 
-  //GET /:id
   async index(req, res, next) {
-    const { zona } = req.query
+    const { offset, limit, zona } = req.query;
     try {
-      const chapa = await Chapa.find({ zona: zona, deletado: false });
+      const chapa = await Chapa.paginate(
+        { zona: zona },
+        {
+          offset: Number(offset || 0),
+          limit: Number(limit || 30),
+        }
+      );
       return res.send({ chapa });
     } catch (e) {
       next(e);
@@ -57,6 +62,7 @@ class ChapaController {
     const { zona } = req.query
     const chapa = new Chapa({
       nome: dadosChapa.nome,
+      numero: dadosChapa.numero,
       zona: zona
     })
     try {

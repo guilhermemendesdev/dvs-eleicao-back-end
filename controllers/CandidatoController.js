@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Candidato = mongoose.model('Candidato');
+const Chapa = mongoose.model('Chapa');
 const moment = require('moment')
 const Usuario = mongoose.model('Usuario');
 const fs = require('fs')
@@ -20,7 +21,6 @@ class CandidatoController {
   async search(req, res, next) {
     const { zona } = req.query;
     const search = new RegExp(req.params.search, 'i');
-    console.log(req.params.numero_candidato)
     try {
       const candidato = await Candidato.findOne(
         { numero_candidato: req.params.numero_candidato, zona: zona, deletado: false }
@@ -33,9 +33,15 @@ class CandidatoController {
 
   //GET /:id
   async showAll(req, res, next) {
-    const { zona } = req.query;
+    const { offset, limit, zona } = req.query;
     try {
-      const candidato = await Candidato.find({ deletado: false, zona: zona });
+      const candidato = await Candidato.paginate(
+        { zona: zona },
+        {
+          offset: Number(offset || 0),
+          limit: Number(limit || 30),
+        }
+      );
       return res.send({ candidato });
     } catch (e) {
       next(e);
@@ -46,7 +52,9 @@ class CandidatoController {
   async showAdm(req, res, next) {
     const { zona } = req.query;
     try {
-      const candidato = await Candidato.findOne({ _id: req.params.id, zona: zona });
+      const candidato = await Candidato.findOne({ _id: req.params.id, zona: zona }).populate([
+        'chapa']);
+      ;
       return res.send({ candidato });
     } catch (e) {
       next(e);
@@ -71,7 +79,6 @@ class CandidatoController {
     const dadosCandidato = req.body;
     const { zona } = req.query;
 
-    console.log(dadosCandidato)
     // REGRAS DE PROTOCOLO
     const numRandom = Math.floor((Math.random() * 65536) * Math.random() * 65536);
 
@@ -128,9 +135,14 @@ class CandidatoController {
         tempo_docencia: calculaTempo(moment(dadosCandidato.data_entrada_docencia).format('DD/MM/YYYY')),
         numero_candidato: dadosCandidato.numero_candidato,
         protocolo: `EDU${numRandom}2021`,
-        zona: zona
+        zona: zona,
+        chapa: dadosCandidato.chapa
       })
+      const chapa = await Chapa.findById(dadosCandidato.chapa);
+
+      chapa.candidato.push(`${candidato._id}`);
       await candidato.save();
+      await chapa.save();
       return res.send({ candidato });
     } catch (e) {
       next(e)

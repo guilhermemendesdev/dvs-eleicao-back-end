@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const CandidatoController = require("../../../controllers/CandidatoController");
 const { CandidatoValidation } = require("../../../controllers/validacoes/candidatoValidation");
-const { AdmValidation } = require("../../../controllers/validacoes/admValidation");
+const { ZonaValidation } = require("../../../controllers/validacoes/zonaValidation");
 const upload = require('../../../config/multer');
 
 const validate = require("express-validation");
@@ -15,14 +15,14 @@ const candidatoController = new CandidatoController();
 
 // ADM
 
-router.post("/", auth.required, AdmValidation.adm, validate(CandidatoValidation.store), candidatoController.store); //testado
-router.put('/images/:id', auth.required, AdmValidation.adm, validate(CandidatoValidation.updateFoto), upload.array('file', 1), candidatoController.updateFoto); //testado
-router.put("/:id", auth.required, AdmValidation.adm, validate(CandidatoValidation.update), candidatoController.update); //testado
-router.delete("/:id", auth.required, AdmValidation.adm, validate(CandidatoValidation.update), candidatoController.remove); //testado
+router.post("/", auth.required, ZonaValidation.adm, validate(CandidatoValidation.store), candidatoController.store); //testado
+router.put('/images/:id', auth.required, ZonaValidation.adm, validate(CandidatoValidation.updateFoto), upload.array('file', 1), candidatoController.updateFoto); //testado
+router.put("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.update); //testado
+router.delete("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.remove); //testado
 
-router.get("/", auth.required, validate(CandidatoValidation.showAll), candidatoController.showAll); //testado
-router.get("/:id", auth.required, validate(CandidatoValidation.showAdm), candidatoController.showAdm); //testado
-router.get("/numero/:numero_candidato", validate(CandidatoValidation.search), candidatoController.search); //testado
+router.get("/", auth.required, ZonaValidation.adm, validate(CandidatoValidation.showAll), candidatoController.showAll); //testado
+router.get("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.showAdm), candidatoController.showAdm); //testado
+//router.get("/chapa/:numero_candidato", ZonaValidation.adm, validate(CandidatoValidation.search), candidatoController.search); //testado
 
 
 module.exports = router;

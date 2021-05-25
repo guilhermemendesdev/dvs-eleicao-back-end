@@ -13,6 +13,10 @@ const ChapaSchema = new mongoose.Schema({
     ref: "Zona",
     required: true
   },
+  numero: {
+    type: Number,
+    required: [true, "não pode ficar vazio."]
+  },
   candidato: {
     type: [{
       type: Schema.Types.ObjectId,

@@ -13,7 +13,7 @@ const app = express();
 
 // AMBIENTE
 const isProduction = process.env.NODE_ENV === "production";
-const PORT = 3005;
+const PORT = 3000;
 
 // ARQUIVOS ESTATICOS
 app.use("/public", express.static(__dirname + "/public"));

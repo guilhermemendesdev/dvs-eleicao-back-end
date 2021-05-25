@@ -3,7 +3,7 @@ const Extension = require("joi-date-extensions");
 const Joi = BaseJoi.extend(Extension);
 const pattern = '[A-Z]{3}[0-9][0-9A-Z][0-9]{2}'
 
-const CandidatoValidation = {
+const AlunoValidation = {
 
   showAdm: {
     params: {
@@ -57,7 +57,8 @@ const CandidatoValidation = {
         uf: Joi.string().required(),
         bairro: Joi.string().required(),
         numero: Joi.string().required()
-      }).required()
+      }).required(),
+      numero_candidato: Joi.string().required(),
     }
   },
 
@@ -122,5 +123,5 @@ const CandidatoValidation = {
 };
 
 module.exports = {
-  CandidatoValidation
+  AlunoValidation
 };

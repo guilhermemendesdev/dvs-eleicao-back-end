@@ -7,7 +7,8 @@ class UsuarioController {
 
     //GET / 
     index(req, res, next) {
-        Usuario.findById(req.payload.id).then(usuario => {
+        console.log(req)
+        Zona.findById(req.payload.id).then(usuario => {
             if (!usuario) return res.status(401).json({ errors: 'Usuário não Registrado' })
             return res.json({ usuario: usuario.enviarAuthJSON() })
         }).catch(next);
@@ -61,6 +62,7 @@ class UsuarioController {
         Zona.findOne({ inep }).then((zona) => {
             if (!zona) return res.status(401).json({ errors: "zona não registrado" });
             if (typeof nome !== "undefined") zona.nome = nome;
+            if (typeof !zona.hash) zona.setSenha(password);
             if (typeof password !== "undefined") zona.setSenha(password);
             console.log(zona)
             return zona.save().then(() => {

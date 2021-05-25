@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const ChapaController = require("../../../controllers/chapaController");
 const { ChapaValidation } = require("../../../controllers/validacoes/chapaValidation");
-const { AdmValidation } = require("../../../controllers/validacoes/admValidation");
+const { ZonaValidation } = require("../../../controllers/validacoes/zonaValidation");
 const upload = require('../../../config/multer');
 
 const validate = require("express-validation");
@@ -11,9 +11,9 @@ const auth = require("../../auth");
 const chapaController = new ChapaController();
 
 // ADM
-router.post("/", auth.required, AdmValidation.adm, validate(ChapaValidation.store), chapaController.store); //testado
-router.put("/:id", auth.required, AdmValidation.adm, validate(ChapaValidation.update), chapaController.update); //testado
-router.delete("/:id", auth.required, AdmValidation.adm, validate(ChapaValidation.remove), chapaController.remove); //testado
+router.post("/adm", auth.required, ZonaValidation.adm, validate(ChapaValidation.store), chapaController.store); //testado
+router.put("/adm/:id", auth.required, ZonaValidation.adm, validate(ChapaValidation.update), chapaController.update); //testado
+router.delete("/:id", auth.required, ZonaValidation.adm, validate(ChapaValidation.remove), chapaController.remove); //testado
 
 // POPULAÇÃO
 router.get("/", validate(ChapaValidation.index), chapaController.index); //testado

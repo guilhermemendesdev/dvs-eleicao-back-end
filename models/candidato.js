@@ -107,10 +107,6 @@ const CandidatoSchema = new mongoose.Schema({
     type: Array,
     default: []
   },
-  numero_candidato: {
-    type: String,
-    required: true
-  },
   protocolo: {
     type: String,
     required: [true, "não pode ficar vazio."]
@@ -118,6 +114,10 @@ const CandidatoSchema = new mongoose.Schema({
   zona: {
     type: Schema.Types.ObjectId,
     ref: 'Zona'
+  },
+  chapa: {
+    type: Schema.Types.ObjectId,
+    ref: 'Chapa'
   },
   deletado: {
     type: Boolean,

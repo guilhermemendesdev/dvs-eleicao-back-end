@@ -4,12 +4,12 @@ const uniqueValidator = require('mongoose-unique-validator');
 const mongoosePaginate = require("mongoose-paginate");
 
 const FuncionarioSchema = new mongoose.Schema({
-    nome: {
-    type: Date,
+  nome: {
+    type: String,
     required: [true, "não pode ficar vazio."]
   },
   inep: {
-    type: Date,
+    type: String,
     required: [true, "não pode ficar vazio."]
   },
   idescola: {

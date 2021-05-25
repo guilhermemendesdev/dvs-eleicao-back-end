@@ -23,7 +23,8 @@ const ChapaValidation = {
       zona: Joi.string().alphanum().length(24).required()
     },
     body: {
-      nome: Joi.string().required()
+      nome: Joi.string().required(),
+      numero: Joi.number().integer().required()
     }
   },
 

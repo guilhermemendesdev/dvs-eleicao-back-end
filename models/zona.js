@@ -48,8 +48,7 @@ const ZonaSchema = new mongoose.Schema({
     required: [true, "não pode ficar vazio."]
   },
   zona: {
-    type: String,
-    required: [true, "não pode ficar vazio."]
+    type: String
   },
   permissao: {
     type: Array,
