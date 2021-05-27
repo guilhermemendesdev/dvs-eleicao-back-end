@@ -190,7 +190,8 @@ class CandidatoController {
       outros_cursos,
       data_entrada_inst,
       data_entrada_docencia,
-      numero_candidato
+      numero_candidato,
+      foto
     } = req.body;
     try {
       const candidato = await Candidato.findById(req.params.id)
@@ -217,8 +218,7 @@ class CandidatoController {
       if (data_entrada_inst) candidato.data_entrada_inst = data_entrada_inst;
       if (data_entrada_docencia) candidato.data_entrada_docencia = data_entrada_docencia;
       if (numero_candidato) candidato.numero_candidato = numero_candidato;
-
-
+      if (foto) candidato.foto = foto;
 
       await candidato.save();
       return res.send({ candidato });

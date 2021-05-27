@@ -43,6 +43,7 @@ const CandidatoSchema = new mongoose.Schema({
   pos_graduacao: {
     type: Boolean,
     required: [true, "não pode ficar vazio."],
+    default: false
   },
   curso_pos_graduacao: {
     type: String
@@ -50,6 +51,7 @@ const CandidatoSchema = new mongoose.Schema({
   mestrado: {
     type: Boolean,
     required: [true, "não pode ficar vazio."],
+    default: false
   },
   curso_mestrado: {
     type: String
@@ -57,6 +59,7 @@ const CandidatoSchema = new mongoose.Schema({
   doutorado: {
     type: Boolean,
     required: [true, "não pode ficar vazio."],
+    default: false
   },
   curso_doutorado: {
     type: String
@@ -64,12 +67,14 @@ const CandidatoSchema = new mongoose.Schema({
   curso_gestor: {
     type: Boolean,
     required: [true, "não pode ficar vazio."],
+    default: false
   },
   obs_curso_gestor: {
     type: String
   },
   outros_cursos: {
-    type: String
+    type: Boolean,
+    default: false
   },
   data_entrada_inst: {
     type: Date,

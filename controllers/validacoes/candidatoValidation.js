@@ -46,7 +46,7 @@ const CandidatoValidation = {
       curso_doutorado: Joi.string().optional().allow(''),
       curso_gestor: Joi.boolean().required(),
       obs_curso_gestor: Joi.string().optional().allow(''),
-      outros_cursos: Joi.string().optional().allow(''),
+      outros_cursos: Joi.boolean().optional().allow(''),
       data_entrada_inst: Joi.string().required(),
       data_entrada_docencia: Joi.string().required(),
       endereco: Joi.object({
@@ -94,7 +94,7 @@ const CandidatoValidation = {
       curso_doutorado: Joi.string().optional(),
       curso_gestor: Joi.boolean().optional(),
       obs_curso_gestor: Joi.string().optional(),
-      outros_cursos: Joi.string().optional(),
+      outros_cursos: Joi.boolean().optional(),
       tempo_modulacao: Joi.string().optional(),
       tempo_docencia: Joi.string().optional(),
       telefones: Joi.array().items(Joi.string()).optional(),
