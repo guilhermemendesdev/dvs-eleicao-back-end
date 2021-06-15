@@ -7,5 +7,6 @@ router.use('/aluno', require('./aluno'));
 router.use('/funcionario', require('./funcionario'));
 router.use('/chapa', require('./chapa'));
 router.use('/usuarios', require('./usuarios'));
+router.use('/horarioBrasilia', require('./horarioBrasilia'));
 
 module.exports = router;

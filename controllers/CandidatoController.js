@@ -219,8 +219,9 @@ class CandidatoController {
       if (data_entrada_docencia) candidato.data_entrada_docencia = data_entrada_docencia;
       if (numero_candidato) candidato.numero_candidato = numero_candidato;
       if (foto) candidato.foto = foto;
-
+      console.log(res.req)
       await candidato.save();
+
       return res.send({ candidato });
     } catch (e) {
       next(e)
