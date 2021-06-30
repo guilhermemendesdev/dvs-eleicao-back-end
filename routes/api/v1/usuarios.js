@@ -9,7 +9,6 @@ const usuarioController = new UsuarioController();
 
 router.post("/login", validate(UsuarioValidation.login), usuarioController.login); // testado
 router.post("/registrar", validate(UsuarioValidation.store), usuarioController.store); // testado
-// router.put("/", auth.required, validate(UsuarioValidation.update), usuarioController.update); // testado
 router.put("/", validate(UsuarioValidation.update), usuarioController.update); // testado
 router.delete("/", auth.required, usuarioController.remove); // testado
 

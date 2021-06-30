@@ -18,13 +18,12 @@ const UsuarioValidation = {
     update: {
         body: {
             nome: Joi.string().optional(),
-            //cpf: Joi.string().length(14).optional(),
             password: Joi.string().optional()
         }
     },
     login: {
         body: {
-            inep: Joi.string().required(),
+            email: Joi.string().required(),
             password: Joi.string().optional().allow('')
         }
     }

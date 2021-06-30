@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
 const Usuario = mongoose.model('Usuario');
-const Zona = mongoose.model('Zona');
 const enviarEmailRecovery = require('../helpers/email-recovery');
 
 class UsuarioController {
 
     //GET / 
     index(req, res, next) {
-        console.log(req)
-        Zona.findById(req.payload.id).then(usuario => {
+        Usuario.findById(req.payload.id).then(usuario => {
             if (!usuario) return res.status(401).json({ errors: 'Usuário não Registrado' })
             return res.json({ usuario: usuario.enviarAuthJSON() })
         }).catch(next);
@@ -43,30 +41,15 @@ class UsuarioController {
             });
     }
 
-    //PUT /
-    // update(req, res, next) {
-    //     const { nome, email, password } = req.body;
-    //     Usuario.findById(req.payload.id).then((usuario) => {
-    //         if (!usuario) return res.status(401).json({ errors: "Usuario não registrado" });
-    //         if (typeof nome !== "undefined") usuario.nome = nome;
-    //         if (typeof email !== "undefined") usuario.email = email;
-    //         if (typeof password !== "undefined") usuario.setSenha(password);
-
-    //         return usuario.save().then(() => {
-    //             return res.json({ usuario: usuario.enviarAuthJSON() });
-    //         }).catch(next);
-    //     }).catch(next);
-    // }
     update(req, res, next) {
         const { nome, inep, password } = req.body;
-        Zona.findOne({ inep }).then((zona) => {
-            if (!zona) return res.status(401).json({ errors: "zona não registrado" });
-            if (typeof nome !== "undefined") zona.nome = nome;
-            if (typeof !zona.hash) zona.setSenha(password);
-            if (typeof password !== "undefined") zona.setSenha(password);
-            console.log(zona)
-            return zona.save().then(() => {
-                return res.json({ zona: zona.enviarAuthJSON() });
+        Usuario.findOne({ inep }).then((usuario) => {
+            if (!usuario) return res.status(401).json({ errors: "usuario não registrado" });
+            if (typeof nome !== "undefined") usuario.nome = nome;
+            if (typeof !usuario.hash) usuario.setSenha(password);
+            if (typeof password !== "undefined") usuario.setSenha(password);
+            return usuario.save().then(() => {
+                return res.json({ usuario: usuario.enviarAuthJSON() });
             }).catch(next);
         }).catch(next);
     }
@@ -84,7 +67,7 @@ class UsuarioController {
     //POST /login
     login(req, res, next) {
         const { inep, password } = req.body;
-        Zona.findOne({ inep }).then((usuario) => {
+        Usuario.findOne({ inep }).then((usuario) => {
             if (!usuario) return res.status(401).json({ errors: "Usuario não registrado" });
             if (!usuario.hash) return res.status(401).json({ errors: "Usuario sem senha" });
             if (!usuario.validarSenha(password)) return res.status(401).json({ errors: "Senha inválida" });
