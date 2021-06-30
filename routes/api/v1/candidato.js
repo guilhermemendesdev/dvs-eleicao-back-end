@@ -20,7 +20,7 @@ router.put('/images/:id', auth.required, ZonaValidation.adm, validate(CandidatoV
 router.put("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.update); //testado
 router.delete("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.remove); //testado
 
-router.get("/", auth.required, ZonaValidation.adm, validate(CandidatoValidation.showAll), candidatoController.showAll); //testado
+router.get("/", auth.required, ZonaValidation.adm, candidatoController.showAll); //testado
 router.get("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.showAdm), candidatoController.showAdm); //testado
 //router.get("/chapa/:numero_candidato", ZonaValidation.adm, validate(CandidatoValidation.search), candidatoController.search); //testado
 

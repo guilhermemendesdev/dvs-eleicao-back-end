@@ -5,7 +5,7 @@ const mongoosePaginate = require("mongoose-paginate");
 
 const VotoSchema = new mongoose.Schema({
   data_hora_voto: {
-    type: Date,
+    type: String,
     required: [true, "não pode ficar vazio."]
   },
   candidato: {
@@ -13,14 +13,9 @@ const VotoSchema = new mongoose.Schema({
     ref: "Candidato",
     required: true
   },
-  cpf_votante: {
-    type: String,
-    required: [true, "não pode ficar vazio."],
-    default: false
-  },
-  votacao: {
+  zona: {
     type: Schema.Types.ObjectId,
-    ref: "Votacao",
+    ref: "Zona",
     required: true
   },
   deletado: {

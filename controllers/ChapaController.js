@@ -17,7 +17,8 @@ class ChapaController {
 
 
   async index(req, res, next) {
-    const { offset, limit, zona } = req.query;
+    const { offset, limit } = req.query;
+    const zona = req.payload.id;
     try {
       const chapa = await Chapa.paginate(
         { zona: zona },
@@ -34,7 +35,7 @@ class ChapaController {
 
   //GET
   async show(req, res, next) {
-    const { zona } = req.query
+    const zona = req.payload.id;
     try {
       const chapa = await Chapa.findOne({ _id: req.params.id, zona: zona, deletado: false });
       return res.send({ chapa });
@@ -59,7 +60,7 @@ class ChapaController {
 
   async store(req, res, next) {
     const dadosChapa = req.body
-    const { zona } = req.query
+    const zona = req.payload.id;
     const chapa = new Chapa({
       nome: dadosChapa.nome,
       numero: dadosChapa.numero,
@@ -75,7 +76,7 @@ class ChapaController {
 
   async update(req, res, next) {
     const { nome } = req.body;
-    const { zona } = req.query
+    const zona = req.payload.id;
     try {
       const chapa = await Chapa.findById({ _id: req.params.id, zona: zona })
       if (nome) chapa.nome = nome;

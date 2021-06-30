@@ -66,23 +66,6 @@ class ZonaController {
     zona.save().then(() => res.send({ zona })).catch(next);
   }
 
-  //PUT /images/:id
-  // async updateFoto(req, res, next) {
-  //   try {
-  //     const candidato = await Candidato.findOne({ _id: req.params.id });
-  //     if (!candidato) return res.status(400).send({ error: "Candidato não encontrado." });
-
-  //     const novasImagens = req.files.map(item => item.filename);
-  //     candidato.foto = candidato.foto.filter(item => item).concat(novasImagens);
-
-  //     await candidato.save();
-
-  //     return res.send({ candidato });
-  //   } catch (e) {
-  //     next(e);
-  //   }
-  // }
-
   async update(req, res, next) {
     const {
       nome,

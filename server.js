@@ -42,8 +42,8 @@ app.disable('x-powered-by');
 app.use(compression());
 
 // SETUP BODY PARSER
-app.use(bodyParser.urlencoded({ extended: false, limit: 1.5 * 1024 * 1024 }));
-app.use(bodyParser.json({ limit: 1.5 * 1024 * 1024 }));
+app.use(express.urlencoded({ extended: true, limit: 1.5 * 1024 * 1024 }));
+app.use(express.json({ limit: 1.5 * 1024 * 1024 }));
 
 // MODELS
 require("./models");

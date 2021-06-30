@@ -8,7 +8,7 @@ const pattern = '[A-Z]{3}[0-9][0-9A-Z][0-9]{2}'
 const ZonaValidation = {
   adm: (req, res, next) => {
     if (!req.payload.id) return res.sendStatus(401);
-    const { zona } = req.query;
+    const zona = req.payload.id;
     if (!zona) return res.sendStatus(401);
     Zona.findById(req.payload.id).then(zona => {
       if (!zona) return res.sendStatus(401);

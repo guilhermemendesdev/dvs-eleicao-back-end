@@ -9,14 +9,6 @@ const CandidatoValidation = {
     params: {
       id: Joi.string().alphanum().length(24).required()
     },
-    query: {
-      zona: Joi.string().alphanum().length(24).required()
-    }
-  },
-  showAll: {
-    query: {
-      zona: Joi.string().alphanum().length(24).required()
-    }
   },
   search: {
     query: {
@@ -24,9 +16,6 @@ const CandidatoValidation = {
     }
   },
   store: {
-    query: {
-      zona: Joi.string().alphanum().length(24).required()
-    },
     body: {
       dt_nascimento: Joi.date().format("YYYY-MM-DD").raw().required(),
       nome: Joi.string().required(),
@@ -62,18 +51,12 @@ const CandidatoValidation = {
   },
 
   updateFoto: {
-    query: {
-      zona: Joi.string().alphanum().length(24).required()
-    },
     params: {
       id: Joi.string().alphanum().length(24).required()
     }
   },
 
   update: {
-    query: {
-      zona: Joi.string().alphanum().length(24).required()
-    },
     params: {
       id: Joi.string().alphanum().length(24).required()
     },
@@ -112,9 +95,6 @@ const CandidatoValidation = {
   },
 
   remove: {
-    query: {
-      zona: Joi.string().alphanum().length(24).required()
-    },
     params: {
       id: Joi.string().alphanum().length(24).required()
     }

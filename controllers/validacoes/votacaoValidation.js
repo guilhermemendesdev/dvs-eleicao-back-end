@@ -10,13 +10,6 @@ const VotacaoValidation = {
       id: Joi.string().alphanum().length(24).required()
     }
   },
-  store: {
-    body: {
-      zona_eleitoral: Joi.string().required(),
-      candidatos: Joi.array().items(Joi.string().alphanum().length(24).required()).required()
-    }
-  },
-
   update: {
     params: {
       id: Joi.string().alphanum().length(24).required()

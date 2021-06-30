@@ -19,7 +19,7 @@ class CandidatoController {
 
 
   async search(req, res, next) {
-    const { zona } = req.query;
+    const zona = req.payload.id;
     const search = new RegExp(req.params.search, 'i');
     try {
       const candidato = await Candidato.findOne(
@@ -33,7 +33,8 @@ class CandidatoController {
 
   //GET /:id
   async showAll(req, res, next) {
-    const { offset, limit, zona } = req.query;
+    const { offset, limit } = req.query;
+    const zona = req.payload.id;
     try {
       const candidato = await Candidato.paginate(
         { zona: zona },
@@ -50,7 +51,7 @@ class CandidatoController {
 
   //GET
   async showAdm(req, res, next) {
-    const { zona } = req.query;
+    const zona = req.payload.id;
     try {
       const candidato = await Candidato.findOne({ _id: req.params.id, zona: zona }).populate([
         'chapa']);
@@ -77,7 +78,7 @@ class CandidatoController {
 
   async store(req, res, next) {
     const dadosCandidato = req.body;
-    const { zona } = req.query;
+    const zona = req.payload.id;
 
     // REGRAS DE PROTOCOLO
     const numRandom = Math.floor((Math.random() * 65536) * Math.random() * 65536);
@@ -219,7 +220,6 @@ class CandidatoController {
       if (data_entrada_docencia) candidato.data_entrada_docencia = data_entrada_docencia;
       if (numero_candidato) candidato.numero_candidato = numero_candidato;
       if (foto) candidato.foto = foto;
-      console.log(res.req)
       await candidato.save();
 
       return res.send({ candidato });

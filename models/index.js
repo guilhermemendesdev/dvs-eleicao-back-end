@@ -7,3 +7,4 @@ require('./zona');
 require('./aluno');
 require('./funcionario');
 require('./chapa');
+require('./voto');

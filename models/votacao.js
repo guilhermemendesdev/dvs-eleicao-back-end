@@ -5,18 +5,21 @@ const mongoosePaginate = require("mongoose-paginate");
 
 const VotacaoSchema = new mongoose.Schema({
   zona: {
-    type: String,
-    required: [true, "não pode ficar vazio."]
-  },
-  chapa: {
     type: Schema.Types.ObjectId,
-    ref: "Chapa",
+    ref: "Zona",
     required: true
   },
-  votante: {
-    type: Schema.Types.ObjectId,
-    ref: "Votante",
-    required: true
+  iniciada: {
+    type: String
+  },
+  finalizada: {
+    type: String
+  },
+  voto: {
+    type: [{
+      type: Schema.Types.ObjectId,
+      ref: "Voto"
+    }]
   },
   deletado: {
     type: Boolean,

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment')
 const Votacao = mongoose.model('Votacao');
 const Usuario = mongoose.model('Usuario');
 const fs = require('fs')
@@ -17,14 +18,19 @@ class CandidatoController {
 
 
   //GET /:id
-  // async showAll(req, res, next) {
-  //   try {
-  //     const candidato = await Candidato.find();
-  //     return res.send({ candidato });
-  //   } catch (e) {
-  //     next(e);
-  //   }
-  // }
+  async showAll(req, res, next) {
+    const zona = req.payload.id
+    try {
+      const votacao = await Votacao.findOne({ zona: zona })
+        .populate({
+          path: 'voto',
+          populate: { path: 'candidato' }
+        });
+      return res.send({ votacao });
+    } catch (e) {
+      next(e);
+    }
+  }
 
   //GET
   // async showAdm(req, res, next) {
@@ -51,11 +57,13 @@ class CandidatoController {
 
 
   async store(req, res, next) {
-    const dadosVotacao = req.body
+    const zona = req.payload.id;
 
+    const hora = new Date
+    const dataAtual = moment(hora).format('DD/MM/YYYY HH:mm:ss')
     const votacao = new Votacao({
-      zona_eleitoral: dadosVotacao.zona_eleitoral,
-      candidatos: dadosVotacao.candidatos
+      zona: zona,
+      iniciada: dataAtual,
     })
     try {
       await votacao.save();
