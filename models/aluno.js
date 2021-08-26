@@ -40,14 +40,14 @@ const AlunoSchema = new mongoose.Schema({
 
   },
   cpf_filiacao1: {
-    type: Boolean,
+    type: String,
 
   },
   cpf_filiacao2: {
     type: String
   },
   cpf_responsavel: {
-    type: Boolean,
+    type: String,
 
   },
   status_matricula: {
