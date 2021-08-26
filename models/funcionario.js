@@ -26,6 +26,11 @@ const FuncionarioSchema = new mongoose.Schema({
     required: [true, "não pode ficar vazio."],
     default: false
   },
+  votou: {
+    type: Boolean,
+    required: [true, "não pode ficar vazio."],
+    default: false
+  }
 }, { timestamps: true }, { collection: 'funcionarios' });
 
 FuncionarioSchema.plugin(mongoosePaginate);
