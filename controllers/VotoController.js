@@ -8,8 +8,6 @@ const Funcionario = mongoose.model('Funcionario');
 const Votacao = mongoose.model('Votacao');
 const { badRequest } = require('../helpers/http-helper')
 
-const EmailController = require('./EmailController');
-
 class VotoController {
 
   async store(req, res, next) {
