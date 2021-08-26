@@ -13,6 +13,10 @@ const VotoSchema = new mongoose.Schema({
     ref: "Candidato",
     required: true
   },
+  tipo_voto: {
+    type: String,
+    required: true
+  },
   zona: {
     type: Schema.Types.ObjectId,
     ref: "Zona",
