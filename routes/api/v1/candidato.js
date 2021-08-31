@@ -22,7 +22,5 @@ router.delete("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValid
 
 router.get("/", auth.required, ZonaValidation.adm, candidatoController.showAll); //testado
 router.get("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.showAdm), candidatoController.showAdm); //testado
-//router.get("/chapa/:numero_candidato", ZonaValidation.adm, validate(CandidatoValidation.search), candidatoController.search); //testado
-
 
 module.exports = router;

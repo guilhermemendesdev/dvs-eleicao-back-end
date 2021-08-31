@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Candidato = mongoose.model('Candidato');
-const Chapa = mongoose.model('Chapa');
 const moment = require('moment')
 const Usuario = mongoose.model('Usuario');
 const fs = require('fs')
@@ -53,9 +52,7 @@ class CandidatoController {
   async showAdm(req, res, next) {
     const zona = req.payload.id;
     try {
-      const candidato = await Candidato.findOne({ _id: req.params.id, zona: zona }).populate([
-        'chapa']);
-      ;
+      const candidato = await Candidato.findOne({ _id: req.params.id, zona: zona })
       return res.send({ candidato });
     } catch (e) {
       next(e);
@@ -136,14 +133,10 @@ class CandidatoController {
         tempo_docencia: calculaTempo(moment(dadosCandidato.data_entrada_docencia).format('DD/MM/YYYY')),
         numero_candidato: dadosCandidato.numero_candidato,
         protocolo: `EDU${numRandom}2021`,
-        zona: zona,
-        chapa: dadosCandidato.chapa
+        zona: zona
       })
-      const chapa = await Chapa.findById(dadosCandidato.chapa);
 
-      chapa.candidato.push(`${candidato._id}`);
       await candidato.save();
-      await chapa.save();
       return res.send({ candidato });
     } catch (e) {
       next(e)

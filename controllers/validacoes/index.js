@@ -1,7 +1,6 @@
 export * from './admValidation'
 export * from './alunoValidation'
 export * from './candidatoValidation'
-export * from './chapaValidation'
 export * from './funcionarioValidation'
 export * from './usuarioValidation'
 export * from './votacaoValidation'

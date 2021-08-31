@@ -120,10 +120,6 @@ const CandidatoSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'Zona'
   },
-  chapa: {
-    type: Schema.Types.ObjectId,
-    ref: 'Chapa'
-  },
   deletado: {
     type: Boolean,
     required: [true, "não pode ficar vazio."],
