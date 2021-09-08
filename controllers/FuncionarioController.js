@@ -9,15 +9,11 @@ class FuncionarioController {
   //ADM
   // get /admin
   async indexAdm(req, res, next) {
-    const { offset, limit } = req.query;
     const zona = req.payload.id;
     try {
-      const funcionarios = await Funcionario.paginate(
-        { idescola: zona },
-        {
-          offset: Number(offset || 0),
-          limit: Number(limit || 30),
-        }
+      const funcionarios = await Funcionario.find(
+        { idescola: zona }
+
       );
       return res.send({ funcionarios });
     } catch (e) {
