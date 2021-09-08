@@ -9,15 +9,10 @@ class AlunoController {
   //ADM
   // get /admin
   async indexAdm(req, res, next) {
-    const { offset, limit } = req.query;
     const zona = req.payload.id
     try {
-      const alunos = await Aluno.paginate(
-        { idescola: zona },
-        {
-          offset: Number(offset || 0),
-          limit: Number(limit || 30),
-        }
+      const alunos = await Aluno.find(
+        { idescola: zona }
       );
       return res.send({ alunos });
     } catch (e) {
