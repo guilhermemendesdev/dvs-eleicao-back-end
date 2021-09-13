@@ -16,7 +16,7 @@ const candidatoController = new CandidatoController();
 // ADM
 
 router.post("/", auth.required, ZonaValidation.adm, validate(CandidatoValidation.store), candidatoController.store); //testado
-router.put('/images/:id', auth.required, ZonaValidation.adm, validate(CandidatoValidation.updateFoto), upload.array('file', 1), candidatoController.updateFoto); //testado
+router.put('/images/:id', auth.required, ZonaValidation.adm, validate(CandidatoValidation.updateFoto), upload.single('file', 1), candidatoController.updateFoto); //testado
 router.put("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.update); //testado
 router.delete("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.remove); //testado
 

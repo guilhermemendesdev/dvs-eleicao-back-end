@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Candidato = mongoose.model('Candidato');
 const moment = require('moment')
+const imageFileHelper = require('../helpers/upload-image-helper')
 const Usuario = mongoose.model('Usuario');
 const fs = require('fs')
 const path = require('path')
@@ -149,12 +150,12 @@ class CandidatoController {
       const candidato = await Candidato.findOne({ _id: req.params.id });
       if (!candidato) return res.status(400).send({ error: "Candidato não encontrado." });
 
-      const novasImagens = req.files.map(item => item.filename);
-      candidato.foto = candidato.foto.filter(item => item).concat(novasImagens);
-
-      await candidato.save();
-
-      return res.send({ candidato });
+      imageFileHelper.compressImage(req.file, 1000)
+        .then(async newPath => {
+          candidato.foto = candidato.foto.filter(item => item).concat(newPath);
+          await candidato.save();
+          return res.send({ candidato });
+        })
     } catch (e) {
       next(e);
     }
