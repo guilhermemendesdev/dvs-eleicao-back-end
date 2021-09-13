@@ -53,6 +53,9 @@ const CandidatoValidation = {
   updateFoto: {
     params: {
       id: Joi.string().alphanum().length(24).required()
+    },
+    query: {
+      cpf: Joi.string().length(14).required()
     }
   },
 
