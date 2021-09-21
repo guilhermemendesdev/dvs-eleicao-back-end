@@ -1,6 +1,8 @@
 const multer = require('multer');
 const fs = require('fs')
 
+
+//UPLOAD DE IMAGEM
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         const { cpf } = req.query;
@@ -39,4 +41,42 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
-module.exports = upload;
+//UPLOAD DE DOCUMENTOS
+
+const storageInscricao = multer.diskStorage({
+
+    destination: (req, file, callback) => {
+      const { categoria, cpf } = req.query;
+  
+      var isvalidate = function (data) {
+        var dir = "./tmp/doc__eleicao/candidatos" + "/" + cpf
+        if (!fs.existsSync(dir)) {
+          fs.mkdirSync(dir, { recursive: true });
+          return dir;
+        } else {
+          return dir;
+        }
+      };
+  
+      callback(null, isvalidate())
+  
+    },
+    filename: (req, file, callback) => callback(null, file.fieldname + '-' + Date.now() + file.originalname.substring(file.originalname.indexOf("."))),
+  
+  });
+  
+  const uploadCandidato = multer({
+    fileFilter: function (req, file, callback) {
+      if (file.mimetype !== 'application/pdf') {
+        return callback(new Error('Extensão de arquivo não suportada'));
+      }
+      callback(null, true)
+    },
+    storage: storageInscricao,
+    limits: { fileSize: 5 * 1024 * 1024 }
+  })
+
+  module.exports = {
+    upload,
+    uploadCandidato,
+  }
