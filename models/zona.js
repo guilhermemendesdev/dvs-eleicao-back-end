@@ -8,24 +8,24 @@ const secret = require('../config').secret;
 
 const ZonaSchema = new mongoose.Schema({
   inep: {
-    type: Number,
-    required: [true, "não pode ficar vazio."]
+    type: String,
+    
   },
   nome: {
     type: String,
-    required: [true, "não pode ficar vazio."]
+    
   },
   diretor: {
     type: String,
-    required: [true, "não pode ficar vazio."]
+    
   },
   coordenador_geral: {
     type: String,
-    required: [true, "não pode ficar vazio."]
+    
   },
   telefone: {
     type: String,
-    required: [true, "não pode ficar vazio."]
+    
   },
   email: {
     type: String,
@@ -37,15 +37,15 @@ const ZonaSchema = new mongoose.Schema({
   },
   endereco: {
     type: String,
-    required: [true, "não pode ficar vazio."]
+    
   },
   status: {
     type: String,
-    required: [true, "não pode ficar vazio."]
+    
   },
   tipo: {
     type: String,
-    required: [true, "não pode ficar vazio."]
+    
   },
   zona: {
     type: String
@@ -54,8 +54,14 @@ const ZonaSchema = new mongoose.Schema({
     type: Array,
     default: ['adm']
   },
-  hash: String,
-  salt: String,
+  hash: {
+    type: String,
+    default: ''
+},
+salt: {
+    type: String,
+    default: ''
+},
   deletado: Boolean,
   recovery: {
     type: {
@@ -66,7 +72,6 @@ const ZonaSchema = new mongoose.Schema({
   },
   deletado: {
     type: Boolean,
-    required: [true, "não pode ficar vazio."],
     default: false
   },
 }, { timestamps: true }, { collection: 'zona' });
