@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
-
-const Usuario = mongoose.model('Usuario');
 const Aluno = mongoose.model('Aluno');
-const Zona = mongoose.model('Zona');
 
 class AlunoController {
 
@@ -20,7 +17,7 @@ class AlunoController {
     }
   }
 
-  // // get /adm/:id
+ // // get /adm/:id
   async showAdm(req, res, next) {
     try {
       const aluno = await Aluno
