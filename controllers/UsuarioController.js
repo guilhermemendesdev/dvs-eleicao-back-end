@@ -82,16 +82,15 @@ class UsuarioController {
     }
 
     //POST /login
-    login(req, res, next) {
-        const { inep, password } = req.body;
-        Zona.findOne({ inep }).then((usuario) => {
+   async login(req, res, next) {
+          const { inep, password } = req.body;
+        await Zona.findOne({ inep }).then((usuario) => {
             if (!usuario) return res.status(401).json({ errors: "Usuario não registrado" });
-            if (!usuario.hash) return res.status(401).json({ errors: "Usuario sem senha" });
             if (!usuario.validarSenha(password)) return res.status(401).json({ errors: "Senha inválida" });
             return res.json({ usuario: usuario.enviarAuthJSON() });
         }).catch(next);
     }
-
+    
     //RECOVERY
     //GET /recuperar-senha
     showRecovery(req, res, next) {
