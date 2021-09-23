@@ -23,10 +23,6 @@ app.use('/fotosCandidato', express.static(path.resolve(__dirname, "tmp", "doc__e
 // SETUP MONGODB
 const dbs = require("./config/database");
 
-// VERSÃO PRODUÇÃO
-// const dbURI = dbs.dbProduction;
-
-
 // VERSÃO TESTE
 const dbURI = process.env.NODE_ENV === 'production' ? dbs.dbProduction : dbs.dbTeste;
 
@@ -37,7 +33,7 @@ app.set("view engine", "ejs");
 
 // CONFIGURACOES
 if (!isProduction) app.use(morgan("dev"));
-app.use(cors());
+if (!isProduction) app.use(cors());
 app.disable('x-powered-by');
 app.use(compression());
 
