@@ -13,7 +13,7 @@ const app = express();
 
 // AMBIENTE
 const isProduction = process.env.NODE_ENV === "production";
-const PORT = 3000;
+const PORT = 3002;
 
 // ARQUIVOS ESTATICOS
 app.use("/public", express.static(__dirname + "/public"));
@@ -28,7 +28,7 @@ const dbs = require("./config/database");
 
 
 // VERSÃO TESTE
-const dbURI = process.env === 'production' ? dbs.dbProduction : dbs.dbTeste;
+const dbURI = process.env.NODE_ENV === 'production' ? dbs.dbProduction : dbs.dbTeste;
 
 mongoose.connect(dbURI, { useNewUrlParser: true });
 
