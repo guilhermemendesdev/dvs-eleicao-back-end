@@ -14,8 +14,18 @@ class VotoController {
     const zona = req.payload.id;
     const { candidato, idVotante, tipoVoto } = req.body
     const votacao = await Votacao.findOne({ zona: zona })
+
     const hora = new Date
     const dataAtual = moment(hora).format('DD/MM/YYYY HH:mm:ss')
+
+    if (!votacao) {
+      const votacaoIniciada = new Votacao({
+        zona: zona,
+        iniciada: dataAtual,
+      })
+      votacaoIniciada.save()
+      votacao = votacaoIniciada
+    }
 
     try {
       if (tipoVoto === 'aluno' || tipoVoto === 'resp') {
@@ -38,11 +48,12 @@ class VotoController {
         zona: zona,
         data_hora_voto: dataAtual,
         tipo_voto: tipoVoto,
-        candidato: candidato
+        candidato: candidato,
+        tipo_voto: tipoVoto
       })
       votacao.voto.push(voto._id)
-
       await voto.save();
+
       await votacao.save();
       return res.send({ voto })
     } catch (e) {
