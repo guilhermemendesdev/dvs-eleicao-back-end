@@ -3,7 +3,8 @@ const router = require("express").Router();
 const CandidatoController = require("../../../controllers/CandidatoController");
 const { CandidatoValidation } = require("../../../controllers/validacoes/candidatoValidation");
 const { ZonaValidation } = require("../../../controllers/validacoes/zonaValidation");
-const upload = require('../../../config/multer');
+const { upload, uploadCandidato } = require('../../../config/multer')
+const multer = require('multer')
 
 const validate = require("express-validation");
 const auth = require("../../auth");
@@ -16,7 +17,8 @@ const candidatoController = new CandidatoController();
 // ADM
 
 router.post("/", auth.required, ZonaValidation.adm, validate(CandidatoValidation.store), candidatoController.store); //testado
-router.put('/images/:id', auth.required, ZonaValidation.adm, validate(CandidatoValidation.updateFoto), upload.single('file', 1), candidatoController.updateFoto); //testado
+router.put('/images/:id', auth.required, ZonaValidation.adm, validate(CandidatoValidation.updateFoto), multer(upload).single("file"), candidatoController.updateFoto); //testado
+router.put('/docs/:id', auth.required, ZonaValidation.adm, validate(CandidatoValidation.uploadDocs), multer(uploadCandidato).single("file"), candidatoController.uploadDocs); //testado
 router.put("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.update); //testado
 router.delete("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.remove); //testado
 
