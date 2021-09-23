@@ -1,7 +1,10 @@
 const router = require('express').Router();
 
 router.use('/api/v1', require('./api/v1/'));
-router.get('/', (req, res, next) => res.send({ ok: true }));
+router.get('/', (req, res, next) => res.send({
+    title: "API ELEIÇÃO",
+    version: "0.0.1"
+}));
 
 router.use(function (err, req, res, next) {
     if (err.name === 'ValidationError') {
