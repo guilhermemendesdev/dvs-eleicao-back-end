@@ -120,6 +120,104 @@ const CandidatoSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'Zona'
   },
+  numero_candidato: {
+    type: Number
+  },
+  docs: {
+    type: {
+      doc_1: {
+        type: {
+          file: { type: String, required: true },
+          original_file: { type: String, required: true }
+        },
+        default: {}
+      },
+      doc_2: {
+        type: {
+          file: { type: String, required: true },
+          original_file: { type: String, required: true }
+        },
+        default: {}
+      },
+      doc_3: {
+        type: {
+          file: { type: String, required: true },
+          original_file: { type: String, required: true }
+        },
+        default: {}
+      },
+      doc_4: {
+        type: {
+          file: { type: String, required: true },
+          original_file: { type: String, required: true }
+        },
+        default: {}
+      },
+      doc_5: {
+        type: {
+          file: { type: String, required: true },
+          original_file: { type: String, required: true }
+        },
+        default: {}
+      },
+      doc_6: {
+        type: {
+          file: { type: String, required: true },
+          original_file: { type: String, required: true }
+        },
+        default: {}
+      },
+      doc_7: {
+        type: {
+          file: { type: String, required: true },
+          original_file: { type: String, required: true }
+        },
+        default: {}
+      },
+      doc_8: {
+        type: {
+          file: { type: String, required: true },
+          original_file: { type: String, required: true }
+        },
+        default: {}
+      },
+      doc_9: {
+        type: {
+          file: { type: String, required: true },
+          original_file: { type: String, required: true }
+        },
+        default: {}
+      },
+      doc_10: {
+        type: {
+          file: { type: String, required: true },
+          original_file: { type: String, required: true }
+        },
+        default: {}
+      },
+      doc_11: {
+        type: {
+          file: { type: String, required: true },
+          original_file: { type: String, required: true }
+        },
+        default: {}
+      },
+    },
+    default: {
+      doc_1: { file: '', original_file: '' },
+      doc_2: { file: '', original_file: '' },
+      doc_3: { file: '', original_file: '' },
+      doc_4: { file: '', original_file: '' },
+      doc_5: { file: '', original_file: '' },
+      doc_6: { file: '', original_file: '' },
+      doc_7: { file: '', original_file: '' },
+      doc_8: { file: '', original_file: '' },
+      doc_9: { file: '', original_file: '' },
+      doc_10: { file: '', original_file: '' },
+      doc_11: { file: '', original_file: '' },
+    }
+  },
+
   deletado: {
     type: Boolean,
     required: [true, "não pode ficar vazio."],
