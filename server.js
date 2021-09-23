@@ -28,7 +28,7 @@ const dbs = require("./config/database");
 
 
 // VERSÃO TESTE
-const dbURI = dbs.dbTeste;
+const dbURI = process.env === 'production' ? dbs.dbProduction : dbs.dbTeste;
 
 mongoose.connect(dbURI, { useNewUrlParser: true });
 
