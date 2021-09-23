@@ -19,7 +19,7 @@ class ZonaController {
   //GET /:id
   async showAll(req, res, next) {
     try {
-      const zona = await Zona.find({ deletado: false });
+      const zona = await Zona.find({ deletado: false }, '_id nome');
       return res.send({ zona });
     } catch (e) {
       next(e);
