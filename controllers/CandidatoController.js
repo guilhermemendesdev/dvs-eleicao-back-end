@@ -76,21 +76,20 @@ class CandidatoController {
 
   async store(req, res, next) {
     const dadosCandidato = req.body;
-    const zona = req.payload.id;
 
     // REGRAS DE PROTOCOLO
     const numRandom = Math.floor((Math.random() * 65536) * Math.random() * 65536);
 
     // REGRAS DE TEMPOS DE INST E DOCENCIA
     function calculaTempo(data) {
-      var dataAtual = new Date();
-      var anoAtual = dataAtual.getFullYear();
-      var anoDataParts = data.split('/');
-      var diaData = anoDataParts[0];
-      var mesData = anoDataParts[1];
-      var anoData = anoDataParts[2];
-      var idade = anoAtual - anoData;
-      var mesAtual = dataAtual.getMonth() + 1;
+      let dataAtual = new Date();
+      let anoAtual = dataAtual.getFullYear();
+      let anoDataParts = data.split('/');
+      let diaData = anoDataParts[0];
+      let mesData = anoDataParts[1];
+      let anoData = anoDataParts[2];
+      let idade = anoAtual - anoData;
+      let mesAtual = dataAtual.getMonth() + 1;
       //Se mes atual for menor que a data informada, nao fez ano ainda;  
       if (mesAtual < mesData) {
         idade--;
@@ -134,12 +133,13 @@ class CandidatoController {
         tempo_docencia: calculaTempo(moment(dadosCandidato.data_entrada_docencia).format('DD/MM/YYYY')),
         numero_candidato: dadosCandidato.numero_candidato,
         protocolo: `EDU${numRandom}2021`,
-        zona: zona
+        zona: dadosCandidato.zona
       })
 
       await candidato.save();
       return res.send({ candidato });
     } catch (e) {
+      res.status(500).send(e);
       next(e)
     }
   }
@@ -149,10 +149,16 @@ class CandidatoController {
     try {
       const candidato = await Candidato.findOne({ _id: req.params.id });
       if (!candidato) return res.status(400).send({ error: "Candidato não encontrado." });
+      let cpf2 = candidato.cpf;
+      cpf2 = cpf2.replace(".", "");
+      cpf2 = cpf2.replace(".", "");
+      cpf2 = cpf2.replace("-", "");
 
       imageFileHelper.compressImage(req.file, 1000)
         .then(async newPath => {
-          candidato.foto = candidato.foto.filter(item => item).concat(newPath);
+          const docItem = (candidato.foto[0]) ? candidato.foto[0] : '';
+          if (candidato.foto[0]) promisify(fs.unlink)(path.resolve(__dirname, '..', 'tmp', 'doc__eleicao', 'candidatos', `${cpf2}`, docItem))
+          candidato.foto = newPath;
           await candidato.save();
           return res.send({ candidato });
         })
@@ -219,6 +225,36 @@ class CandidatoController {
       return res.send({ candidato });
     } catch (e) {
       next(e)
+    }
+  }
+
+  async uploadDocs(req, res, next) {
+    try {
+      const { categoria } = req.query;
+      const candidato = await Candidato.findById(req.params.id);
+      if (!candidato) return res.status(400).send({ error: "Candidato não encontrado." });
+      const { filename: file } = req.file;
+
+      let cpf2 = candidato.cpf;
+      cpf2 = cpf2.replace(".", "");
+      cpf2 = cpf2.replace(".", "");
+      cpf2 = cpf2.replace("-", "");
+
+      const docFields = ['doc_1', 'doc_2', 'doc_3', 'doc_4', 'doc_5', 'doc_6', 'doc_7', 'doc_8', 'doc_9', 'doc_10', 'doc_11',]
+      docFields.forEach(item => {
+        const docItem = (candidato.docs[item].file) ? candidato.docs[item].file : '';
+        if (categoria === item) promisify(fs.unlink)(path.resolve(__dirname, '..', 'tmp', 'doc__eleicao', 'candidatos', `${cpf2}`, docItem))
+        if (categoria.includes(item)) {
+          candidato.docs[item].file = file, candidato.docs[item].original_file = req.file.originalname
+        }
+      })
+
+      candidato.markModified("docs")
+      await candidato.save();
+
+      return res.send({ candidato });
+    } catch (e) {
+      next(e);
     }
   }
 
