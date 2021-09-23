@@ -41,7 +41,7 @@ const CandidatoValidation = {
       endereco: Joi.object({
         cep: Joi.string().required(),
         rua: Joi.string().required(),
-        complemento: Joi.string().required(),
+        complemento: Joi.string().optional().allow(''),
         cidade: Joi.string().required(),
         uf: Joi.string().required(),
         bairro: Joi.string().required(),
@@ -100,6 +100,16 @@ const CandidatoValidation = {
   remove: {
     params: {
       id: Joi.string().alphanum().length(24).required()
+    }
+  },
+
+  uploadDocs: {
+    params: {
+      id: Joi.string().alphanum().length(24).required()
+    },
+    query: {
+      cpf: Joi.string().length(14).required(),
+      categoria: Joi.string().required()
     }
   },
 };
