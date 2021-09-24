@@ -15,7 +15,7 @@ const votoController = new VotoController();
 
 router.post("/", auth.required, ZonaValidation.adm, votoController.store); //testado
 // router.put('/images/:id', auth.required, validate(VotacaoValidation.updateFoto), upload.array('file', 1), votacaoController.updateFoto); //testado
-// router.get("/", auth.required, ZonaValidation.adm, votoController.showAll); //testado
+router.get("/", votoController.showAll); //testado
 // router.get("/:id", auth.required, validate(VotacaoValidation.showAdm), votacaoController.showAdm); //testado
 // router.put("/:id", auth.required, validate(VotacaoValidation.update), votacaoController.update); //testado
 // router.delete("/:id", auth.required, votacaoController.removeAdm); //testado
