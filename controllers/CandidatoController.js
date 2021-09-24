@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Candidato = mongoose.model('Candidato');
 const moment = require('moment')
 const imageFileHelper = require('../helpers/upload-image-helper')
-const Usuario = mongoose.model('Usuario');
 const fs = require('fs')
 const path = require('path')
 const { promisify } = require('util')
@@ -72,7 +71,6 @@ class CandidatoController {
       next(e);
     }
   }
-
 
   async store(req, res, next) {
     const dadosCandidato = req.body;
