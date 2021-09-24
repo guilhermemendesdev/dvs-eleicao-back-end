@@ -60,6 +60,15 @@ class VotoController {
       next(e)
     }
   }
+
+  async showAll(req, res, next) {
+    try {
+      const votos = await Voto.find({}, '_id zona tipo_voto candidato')
+      res.send({ votos })
+    } catch (e) {
+      next(e)
+    }
+  }
 }
 
 module.exports = VotoController
