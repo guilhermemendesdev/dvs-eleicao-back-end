@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Aluno = mongoose.model('Aluno');
+const Zona = mongoose.model('Zona');
 
 class AlunoController {
 
@@ -17,7 +18,40 @@ class AlunoController {
     }
   }
 
- // // get /adm/:id
+  async showAll(req, res, next) {
+    try {
+      var lista = []
+      await Zona.find({}, '_id inep').then(async response => {
+        await Promise.all(response.map(async item => {
+          const alunos = await Aluno.count({ inep: item.inep })
+          lista.push({ unidade: item, qtd_alunos: alunos })
+          return lista
+        }))
+      })
+      return res.send({ lista })
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  // async showAll(req, res, next) {
+  //   try {
+
+  //     const zonas = await Zona.find()
+
+  //     const aluno = await Aluno.find({ inep: 52021173 })
+  //     aluno.map(item => {
+  //       item.idescola = '614888c9d5360000e4009792'
+  //       item.save()
+  //     })
+  //     return res.send({ aluno })
+  //   } catch (e) {
+  //     next(e)
+  //   }
+  // }
+
+
+  // // get /adm/:id
   async showAdm(req, res, next) {
     try {
       const aluno = await Aluno
