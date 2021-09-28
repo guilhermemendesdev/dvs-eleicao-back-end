@@ -12,6 +12,7 @@ const alunoController = new AlunoController();
 
 // ADM
 router.get('/adm', auth.required, ZonaValidation.adm, alunoController.indexAdm);
+router.get('/', alunoController.showAll);
 router.get('/adm/:id', auth.required, ZonaValidation.adm, alunoController.showAdm);
 router.get("/adm/search/:search", auth.required, ZonaValidation.adm, alunoController.searchAlunos);
 // router.post("/", auth.required, AdmValidation.adm, validate(ZonaValidation.store), alunoController.store); //testado
