@@ -5,12 +5,10 @@ const mongoosePaginate = require("mongoose-paginate");
 
 const AlunoSchema = new mongoose.Schema({
   idescola: {
-    type: Schema.Types.ObjectId,
-    ref: 'Zona'
+    type: String,
   },
   inep: {
     type: String,
-
   },
   nome: {
     type: String,
