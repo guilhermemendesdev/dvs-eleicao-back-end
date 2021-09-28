@@ -7,7 +7,6 @@ class UsuarioController {
 
     //GET / 
     index(req, res, next) {
-        console.log(req)
         Zona.findById(req.payload.id).then(usuario => {
             if (!usuario) return res.status(401).json({ errors: 'Usuário não Registrado' })
             return res.json({ usuario: usuario.enviarAuthJSON() })
@@ -64,7 +63,6 @@ class UsuarioController {
             if (typeof nome !== "undefined") zona.nome = nome;
             if (typeof !zona.hash) zona.setSenha(password);
             if (typeof password !== "undefined") zona.setSenha(password);
-            console.log(zona)
             return zona.save().then(() => {
                 return res.json({ zona: zona.enviarAuthJSON() });
             }).catch(next);
@@ -82,15 +80,15 @@ class UsuarioController {
     }
 
     //POST /login
-   async login(req, res, next) {
-          const { inep, password } = req.body;
+    async login(req, res, next) {
+        const { inep, password } = req.body;
         await Zona.findOne({ inep }).then((usuario) => {
             if (!usuario) return res.status(401).json({ errors: "Usuario não registrado" });
             if (!usuario.validarSenha(password)) return res.status(401).json({ errors: "Senha inválida" });
             return res.json({ usuario: usuario.enviarAuthJSON() });
         }).catch(next);
     }
-    
+
     //RECOVERY
     //GET /recuperar-senha
     showRecovery(req, res, next) {
