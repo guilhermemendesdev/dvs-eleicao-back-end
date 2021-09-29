@@ -5,7 +5,7 @@ const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
-const cors = require("cors");
+//const cors = require("cors");
 const path = require('path');
 
 // START
@@ -33,7 +33,7 @@ app.set("view engine", "ejs");
 
 // CONFIGURACOES
 if (!isProduction) app.use(morgan("dev"));
-if (!isProduction) app.use(cors());
+//if (!isProduction) app.use(cors());
 app.disable('x-powered-by');
 app.use(compression());
 

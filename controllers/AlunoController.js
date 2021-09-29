@@ -17,7 +17,7 @@ class AlunoController {
     }
   }
 
- // // get /adm/:id
+  // // get /adm/:id
   async showAdm(req, res, next) {
     try {
       const aluno = await Aluno

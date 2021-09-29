@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const AlunoController = require("../../../controllers/alunoController");
+const AlunoController = require("../../../controllers/AlunoController");
 const { ZonaValidation } = require("../../../controllers/validacoes/zonaValidation");
 const { AlunoValidation } = require("../../../controllers/validacoes/alunoValidation");
 const upload = require('../../../config/multer');
