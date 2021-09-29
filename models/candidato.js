@@ -17,14 +17,18 @@ const CandidatoSchema = new mongoose.Schema({
     type: String,
     required: [true, "não pode ficar vazio."]
   },
-  dt_nascimento: {
-    type: Date,
-    required: [true, "não pode ficar vazio"]
+  matricula: {
+    type: Number,
+    required: [true, "não pode ficar vazio."]
   },
-  rg: {
-    type: String,
-    required: [true, "não pode ficar vazio."],
-  },
+  // dt_nascimento: {
+  //   type: Date,
+  //   required: [true, "não pode ficar vazio"]
+  // },
+  // rg: {
+  //   type: String,
+  //   required: [true, "não pode ficar vazio."],
+  // },
   cargo: {
     type: String,
     required: [true, "não pode ficar vazio."],
@@ -33,37 +37,37 @@ const CandidatoSchema = new mongoose.Schema({
     type: String,
     required: [true, "não pode ficar vazio."],
   },
-  graduacao: {
-    type: Boolean,
-    required: [true, "não pode ficar vazio."],
-  },
-  curso_graduacao: {
-    type: String
-  },
-  pos_graduacao: {
-    type: Boolean,
-    required: [true, "não pode ficar vazio."],
-    default: false
-  },
-  curso_pos_graduacao: {
-    type: String
-  },
-  mestrado: {
-    type: Boolean,
-    required: [true, "não pode ficar vazio."],
-    default: false
-  },
-  curso_mestrado: {
-    type: String
-  },
-  doutorado: {
-    type: Boolean,
-    required: [true, "não pode ficar vazio."],
-    default: false
-  },
-  curso_doutorado: {
-    type: String
-  },
+  // graduacao: {
+  //   type: Boolean,
+  //   required: [true, "não pode ficar vazio."],
+  // },
+  // curso_graduacao: {
+  //   type: String
+  // },
+  // pos_graduacao: {
+  //   type: Boolean,
+  //   required: [true, "não pode ficar vazio."],
+  //   default: false
+  // },
+  // curso_pos_graduacao: {
+  //   type: String
+  // },
+  // mestrado: {
+  //   type: Boolean,
+  //   required: [true, "não pode ficar vazio."],
+  //   default: false
+  // },
+  // curso_mestrado: {
+  //   type: String
+  // },
+  // doutorado: {
+  //   type: Boolean,
+  //   required: [true, "não pode ficar vazio."],
+  //   default: false
+  // },
+  // curso_doutorado: {
+  //   type: String
+  // },
   curso_gestor: {
     type: Boolean,
     required: [true, "não pode ficar vazio."],
@@ -72,10 +76,10 @@ const CandidatoSchema = new mongoose.Schema({
   obs_curso_gestor: {
     type: String
   },
-  outros_cursos: {
-    type: Boolean,
-    default: false
-  },
+  // outros_cursos: {
+  //   type: Boolean,
+  //   default: false
+  // },
   data_entrada_inst: {
     type: Date,
     required: [true, "não pode ficar vazio."]
@@ -96,18 +100,18 @@ const CandidatoSchema = new mongoose.Schema({
     required: [true, "não pode ficar vazio."],
     match: [/\S+@\S+\.\S+/, 'é inválido.']
   },
-  endereco: {
-    type: {
-      cep: { type: String, required: true },
-      rua: { type: String, required: true },
-      complemento: { type: String },
-      cidade: { type: String, required: true },
-      uf: { type: String, required: true },
-      bairro: { type: String, required: true },
-      numero: { type: String }
-    },
-    required: true
-  },
+  // endereco: {
+  //   type: {
+  //     cep: { type: String, required: true },
+  //     rua: { type: String, required: true },
+  //     complemento: { type: String },
+  //     cidade: { type: String, required: true },
+  //     uf: { type: String, required: true },
+  //     bairro: { type: String, required: true },
+  //     numero: { type: String }
+  //   },
+  //   required: true
+  // },
   foto: {
     type: Array,
     default: []
