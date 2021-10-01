@@ -9,23 +9,26 @@ const secret = require('../config').secret;
 const ZonaSchema = new mongoose.Schema({
   inep: {
     type: String,
-    
+
+  },
+  idescola: {
+    type: String,
   },
   nome: {
     type: String,
-    
+
   },
   diretor: {
     type: String,
-    
+
   },
   coordenador_geral: {
     type: String,
-    
+
   },
   telefone: {
     type: String,
-    
+
   },
   email: {
     type: String,
@@ -37,15 +40,15 @@ const ZonaSchema = new mongoose.Schema({
   },
   endereco: {
     type: String,
-    
+
   },
   status: {
     type: String,
-    
+
   },
   tipo: {
     type: String,
-    
+
   },
   zona: {
     type: String
@@ -57,11 +60,11 @@ const ZonaSchema = new mongoose.Schema({
   hash: {
     type: String,
     default: ''
-},
-salt: {
+  },
+  salt: {
     type: String,
     default: ''
-},
+  },
   deletado: Boolean,
   recovery: {
     type: {

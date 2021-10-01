@@ -21,6 +21,22 @@ class FuncionarioController {
     }
   }
 
+  //GERAR NUMERO DE IDESCOLA
+
+  // async indexAdm(req, res, next) {
+  //   try {
+  //     const funcionarios = await Funcionario.find({ inep: '52097145' })
+  //     funcionarios.map(item => {
+  //       item.idescola = '614888c9d5360000e4009767'
+  //       item.save()
+  //     })
+
+  //     return res.send({ funcionarios })
+  //   } catch (e) {
+  //     next(e)
+  //   }
+  // }
+
   // // get /adm/:id
   async showAdm(req, res, next) {
     try {

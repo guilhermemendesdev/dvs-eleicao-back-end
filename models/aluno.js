@@ -5,11 +5,10 @@ const mongoosePaginate = require("mongoose-paginate");
 
 const AlunoSchema = new mongoose.Schema({
   idescola: {
-    type: String
+    type: String,
   },
   inep: {
     type: String,
-
   },
   nome: {
     type: String,
