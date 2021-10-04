@@ -75,7 +75,7 @@ class CandidatoController {
   async searchProtocolo(req, res, next) {
     try {
       const candidato = await Candidato.findOne(
-        { where: { protocolo: req.body.protocolo } }
+        { protocolo: req.body.protocolo }
       );
       return res.send({ candidato });
     } catch (e) {
