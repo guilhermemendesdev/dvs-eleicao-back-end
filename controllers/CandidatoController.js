@@ -72,6 +72,17 @@ class CandidatoController {
     }
   }
 
+  async searchProtocolo(req, res, next) {
+    try {
+      const candidato = await Candidato.findOne(
+        { where: { protocolo: req.body.protocolo } }
+      );
+      return res.send({ candidato });
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async store(req, res, next) {
     const dadosCandidato = req.body;
 
@@ -135,7 +146,8 @@ class CandidatoController {
         zona: dadosCandidato.zona
       })
 
-      await candidato.save();
+      await candidato.save()
+
       return res.send({ candidato });
     } catch (e) {
       res.status(422).json({ errors: "CPF já consta no banco" });

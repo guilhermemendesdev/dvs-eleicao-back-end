@@ -21,7 +21,7 @@ router.put('/images/:id', auth.required, ZonaValidation.adm, validate(CandidatoV
 router.put('/docs/:id', auth.required, ZonaValidation.adm, validate(CandidatoValidation.uploadDocs), multer(uploadCandidato).single("file"), candidatoController.uploadDocs); //testado
 router.put("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.update); //testado
 router.delete("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.remove); //testado
-
+router.get("/protocolo", candidatoController.searchProtocolo); //testado
 router.get("/", auth.required, ZonaValidation.adm, candidatoController.showAll); //testado
 router.get("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.showAdm), candidatoController.showAdm); //testado
 
