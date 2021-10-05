@@ -11,10 +11,10 @@ const auth = require("../../auth");
 const alunoController = new AlunoController();
 
 // ADM
-router.get('/adm', auth.required, ZonaValidation.adm, alunoController.indexAdm);
-router.get('/', alunoController.showAll);
-router.get('/adm/:id', auth.required, ZonaValidation.adm, alunoController.showAdm);
-router.get("/adm/search/:search", auth.required, ZonaValidation.adm, alunoController.searchAlunos);
+router.get('/', auth.required, ZonaValidation.adm, alunoController.indexAdm);
+router.get('/lista', alunoController.showAll);
+router.get('/:id', auth.required, ZonaValidation.adm, alunoController.showAdm);
+router.get("/search/:search", auth.required, ZonaValidation.adm, alunoController.searchAlunos);
 // router.post("/", auth.required, AdmValidation.adm, validate(ZonaValidation.store), alunoController.store); //testado
 // router.put("/:id", auth.required, ZonaValidation.adm, validate(AlunoValidation.update), alunoController.update); //testado
 // router.delete("/:id", auth.required, AdmValidation.adm, validate(ZonaValidation.remove), alunoController.remove); //testado
