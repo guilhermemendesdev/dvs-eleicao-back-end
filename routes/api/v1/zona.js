@@ -17,7 +17,7 @@ router.delete("/:id", auth.required, AdmValidation.adm, validate(ZonaValidation.
 
 // POPULAÇÃO
 router.get("/", zonaController.showAll); //testado
-router.get("/:id", validate(ZonaValidation.showAdm), zonaController.showAdm); //testado
+router.get("/:id", auth.required, ZonaValidation.adm, validate(ZonaValidation.showAdm), zonaController.showAdm); //testado
 
 
 
