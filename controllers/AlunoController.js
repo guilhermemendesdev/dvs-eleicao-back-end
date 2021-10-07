@@ -18,13 +18,30 @@ class AlunoController {
     }
   }
 
+  async inserirVotante(req, res, next) {
+    //const zona = req.payload.id
+    try {
+      const alunos = await Aluno.find(
+        { serie: /9º/ }
+      );
+      alunos.map(item => {
+        item.votante = true
+        item.save()
+      })
+      return res.send({ alunos });
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async showAll(req, res, next) {
     try {
       var lista = []
       await Zona.find({}, '_id inep').then(async response => {
         await Promise.all(response.map(async item => {
-          const alunos = await Aluno.count({ inep: item.inep })
-          lista.push({ unidade: item, qtd_alunos: alunos })
+          const alunosTotais = await Aluno.count({ inep: item.inep })
+          const alunosVotantes = await Aluno.count({ inep: item.inep, votante: true })
+          lista.push({ unidade: item, qtd_alunos_total: alunosTotais, qtd_alunos_votantes: alunosVotantes })
           return lista
         }))
       })

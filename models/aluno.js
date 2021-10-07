@@ -12,7 +12,6 @@ const AlunoSchema = new mongoose.Schema({
   },
   nome: {
     type: String,
-
   },
   dataNascimento: {
     type: Date,
@@ -59,6 +58,10 @@ const AlunoSchema = new mongoose.Schema({
   resp_votou: {
     type: Boolean,
 
+    default: false
+  },
+  votante: {
+    type: Boolean,
     default: false
   },
   deletado: {
