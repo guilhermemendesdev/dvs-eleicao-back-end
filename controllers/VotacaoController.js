@@ -32,6 +32,40 @@ class CandidatoController {
     }
   }
 
+  async finalizarVotacao(req, res, next) {
+    const votacao = await Votacao.findOne({ _id: req.params.id })
+    const { candidato, porcentagem, status, confirmado } = req.body
+    try {
+      votacao.confirmado = confirmado
+      votacao.resultado.candidato = candidato
+      votacao.resultado.porcentagem = porcentagem
+      votacao.status = status
+      votacao.save()
+      res.send({ votacao })
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  async showResultado(req, res, next) {
+    try {
+      const resultado = await Votacao.find({ confirmado: true }, 'resultado zona').populate({
+        path: 'resultado.candidato',
+        model: 'Candidato',
+        select: 'nome foto'
+      }).populate({
+        path: 'zona',
+        model: 'Zona',
+        select: 'nome'
+      }
+      )
+
+      res.send({ resultado })
+    } catch (e) {
+      next(e)
+    }
+  }
+
   //GET
   // async showAdm(req, res, next) {
   //   try {

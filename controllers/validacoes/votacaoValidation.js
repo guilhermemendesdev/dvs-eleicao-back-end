@@ -10,6 +10,17 @@ const VotacaoValidation = {
       id: Joi.string().alphanum().length(24).required()
     }
   },
+  finalizarVotacao: {
+    params: {
+      id: Joi.string().alphanum().length(24).required()
+    },
+    body: {
+      status: Joi.string().required(),
+      candidato: Joi.string().alphanum().length(24).required(),
+      porcentagem: Joi.number().required(),
+      confirmado: Joi.boolean().required()
+    }
+  },
   update: {
     params: {
       id: Joi.string().alphanum().length(24).required()
