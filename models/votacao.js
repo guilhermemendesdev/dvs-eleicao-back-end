@@ -9,18 +9,29 @@ const VotacaoSchema = new mongoose.Schema({
     ref: "Zona",
     required: true
   },
-  iniciada: {
-    type: String
-  },
-  finalizada: {
-    type: String
-  },
   voto: {
     type: [{
       type: Schema.Types.ObjectId,
       ref: "Voto"
     }]
   },
+  confirmado: {
+    type: Boolean,
+    default: false
+  },
+  resultado: {
+    type: {
+      candidato: {
+        type: Schema.Types.ObjectId,
+        ref: "Candidato",
+        required: true
+      },
+      porcentagem: { type: Number, required: true }
+    },
+    required: false,
+    default: {},
+  },
+  status: { type: String },
   deletado: {
     type: Boolean,
     required: [true, "não pode ficar vazio."],
