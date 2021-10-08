@@ -18,8 +18,7 @@ const CandidatoSchema = new mongoose.Schema({
     required: [true, "não pode ficar vazio."]
   },
   matricula: {
-    type: Number,
-    required: [true, "não pode ficar vazio."]
+    type: Number
   },
   // dt_nascimento: {
   //   type: Date,
