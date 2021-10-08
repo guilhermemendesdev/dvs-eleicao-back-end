@@ -52,7 +52,7 @@ class CandidatoController {
       const resultado = await Votacao.find({ confirmado: true }, 'resultado zona').populate({
         path: 'resultado.candidato',
         model: 'Candidato',
-        select: 'nome foto'
+        select: 'nome foto cpf'
       }).populate({
         path: 'zona',
         model: 'Zona',
