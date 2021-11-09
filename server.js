@@ -25,7 +25,7 @@ const dbs = require("./config/database");
 
 // VERSÃO TESTE
 const dbURI = isProduction ? dbs.dbProduction : dbs.dbTest
-mongoose.connect(dbURI, { useNewUrlParser: true })
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 
 // SETUP EJS
 app.set("view engine", "ejs");
