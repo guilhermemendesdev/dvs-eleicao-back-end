@@ -7,11 +7,9 @@ class AlunoController {
   //ADM
   // get /admin
   async indexAdm(req, res, next) {
-    const zona = req.payload.id
     try {
-      const alunos = await Aluno.find(
-        { idescola: zona }
-      );
+      const zonaInep = await Zona.findOne({ _id: req.payload.id })
+      const alunos = await Aluno.find({ inep: zonaInep.inep });
       return res.send({ alunos });
     } catch (e) {
       next(e);

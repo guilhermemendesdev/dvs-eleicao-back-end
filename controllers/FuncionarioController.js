@@ -9,12 +9,9 @@ class FuncionarioController {
   //ADM
   // get /admin
   async indexAdm(req, res, next) {
-    const zona = req.payload.id;
     try {
-      const funcionarios = await Funcionario.find(
-        { idescola: zona }
-
-      );
+      const zonaInep = await Zona.findOne({ _id: req.payload.id })
+      const funcionarios = await Funcionario.find({ inep: zonaInep.inep });
       return res.send({ funcionarios });
     } catch (e) {
       next(e);

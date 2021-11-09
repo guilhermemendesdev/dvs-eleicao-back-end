@@ -32,8 +32,8 @@ const ZonaValidation = {
   },
 
   update: {
-    params: {
-      id: Joi.string().alphanum().length(24).required()
+    body: {
+      password: Joi.string().required()
     },
     body: {
       nome: Joi.string().optional(),

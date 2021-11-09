@@ -10,7 +10,7 @@ const UsuarioSchema = new mongoose.Schema({
         type: String,
         required: [true, 'não pode ficar vazio.']
     },
-    email: {
+    username: {
         type: String,
         lowercase: true,
         unique: true,

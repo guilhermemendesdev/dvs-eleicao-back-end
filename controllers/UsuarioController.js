@@ -30,9 +30,9 @@ class UsuarioController {
 
     //POST /registrar
     store(req, res, next) {
-        const { nome, email, password } = req.body;
+        const { nome, username, password } = req.body;
 
-        const usuario = new Usuario({ nome, email });
+        const usuario = new Usuario({ nome, username });
         usuario.setSenha(password);
         usuario.save()
             .then(() => res.json({ usuario: usuario.enviarAuthJSON() }))
@@ -80,6 +80,14 @@ class UsuarioController {
     }
 
     //POST /login
+    // async login(req, res, next) {
+    //     const { inep, password } = req.body;
+    //     await Zona.findOne({ inep }).then((usuario) => {
+    //         if (!usuario) return res.status(401).json({ errors: "Usuario não registrado" });
+    //         if (!usuario.validarSenha(password)) return res.status(401).json({ errors: "Senha inválida" });
+    //         return res.json({ usuario: usuario.enviarAuthJSON() });
+    //     }).catch(next);
+    // }
     async login(req, res, next) {
         const { inep, password } = req.body;
         await Zona.findOne({ inep }).then((usuario) => {

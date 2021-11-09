@@ -68,16 +68,11 @@ class ZonaController {
 
   async update(req, res, next) {
     const {
-      nome,
-      coordenador_geral,
-      coordenador_pedagogico,
-      diretor } = req.body;
+      password } = req.body;
     try {
-      const zona = await Zona.findById(req.params.id)
-      if (nome) zona.nome = nome;
-      if (coordenador_geral) zona.coordenador_geral = coordenador_geral;
-      if (coordenador_pedagogico) zona.coordenador_pedagogico = coordenador_pedagogico;
-      if (diretor) zona.diretor = diretor;
+      const zona = await Zona.findById(req.payload.id)
+      if (password) zona.setSenha(password)
+      zona.acesso = 1
       await zona.save();
       return res.send({ zona });
     } catch (e) {

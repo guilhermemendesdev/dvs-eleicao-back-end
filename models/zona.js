@@ -57,6 +57,10 @@ const ZonaSchema = new mongoose.Schema({
     type: Array,
     default: ['adm']
   },
+  acesso: {
+    type: Number,
+    default: 0
+  },
   hash: {
     type: String,
     default: ''
