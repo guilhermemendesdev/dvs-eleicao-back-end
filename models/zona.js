@@ -115,6 +115,7 @@ ZonaSchema.methods.enviarAuthJSON = function () {
     nome: this.nome,
     email: this.email,
     role: this.permissao,
+    acesso: this.acesso,
     token: this.gerarToken()
   };
 };

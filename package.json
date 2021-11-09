@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --timeout 2000 --exit",
-    "start": "nodemon",
-    "dev": "export NODE_ENV=development && pm2 start server.js --name=\"apiEleicao\"",
+    "dev": "set NODE_ENV=development && nodemon server.js",
     "build": "export NODE_ENV=production && pm2 start server.js --name=\"apiEleicao\""
   },
   "author": "Guilherme de Sousa Mendes",

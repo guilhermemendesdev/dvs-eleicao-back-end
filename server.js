@@ -5,7 +5,7 @@ const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
-//const cors = require("cors");
+const cors = require("cors");
 const path = require('path');
 
 // START
@@ -13,7 +13,7 @@ const app = express();
 
 // AMBIENTE
 const isProduction = process.env.NODE_ENV === "production";
-const PORT = 3002;
+const PORT = process.env.PORT || 3002;
 
 // ARQUIVOS ESTATICOS
 app.use("/public", express.static(__dirname + "/public"));
@@ -34,7 +34,7 @@ app.set("view engine", "ejs");
 
 // CONFIGURACOES
 if (!isProduction) app.use(morgan("dev"));
-//app.use(cors());
+if (!isProduction) app.use(cors())
 app.disable('x-powered-by');
 app.use(compression());
 
