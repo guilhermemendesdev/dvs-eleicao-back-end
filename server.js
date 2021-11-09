@@ -12,8 +12,8 @@ const path = require('path');
 const app = express();
 
 // AMBIENTE
-const isProduction = process.env.NODE_ENV === "production";
-const PORT = process.env.PORT || 3002;
+const isProduction = process.env.NODE_ENV === 'production'
+const PORT = process.env.PORT || 3002
 
 // ARQUIVOS ESTATICOS
 app.use("/public", express.static(__dirname + "/public"));
@@ -24,19 +24,17 @@ app.use('/fotosCandidato', express.static(path.resolve(__dirname, "tmp", "doc__e
 const dbs = require("./config/database");
 
 // VERSÃO TESTE
-const dbURI = process.env.NODE_ENV === 'production' ? dbs.dbProduction : dbs.dbTeste;
-console.log(dbURI)
-
-mongoose.connect(dbURI, { useNewUrlParser: true });
+const dbURI = isProduction ? dbs.dbProduction : dbs.dbTest
+mongoose.connect(dbURI, { useNewUrlParser: true })
 
 // SETUP EJS
 app.set("view engine", "ejs");
 
 // CONFIGURACOES
-if (!isProduction) app.use(morgan("dev"));
+if (!isProduction) app.use(morgan('dev'))
 if (!isProduction) app.use(cors())
-app.disable('x-powered-by');
-app.use(compression());
+app.disable('x-powered-by')
+app.use(compression())
 
 // SETUP BODY PARSER
 app.use(express.urlencoded({ extended: true, limit: 1.5 * 1024 * 1024 }));
