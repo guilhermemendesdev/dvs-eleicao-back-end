@@ -9,7 +9,7 @@ const secret = require('../config').secret;
 const ZonaSchema = new mongoose.Schema({
   inep: {
     type: String,
-
+    unique: [true, 'Usuário já consta no banco'],
   },
   idescola: {
     type: String,
