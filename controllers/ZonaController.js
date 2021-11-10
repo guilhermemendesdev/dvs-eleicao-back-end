@@ -51,18 +51,24 @@ class ZonaController {
 
   // POST /
   store(req, res, next) {
-    const {
-      nome,
-      inep,
-      password
-    } = req.body;
-    const zona = new Zona({
-      nome,
-      password,
-      inep
-    });
-    zona.setSenha(password)
-    zona.save().then(() => res.json({ zona: zona.enviarAuthJSON() }))
+    try {
+      const {
+        nome,
+        inep,
+        password
+      } = req.body;
+      const zona = new Zona({
+        nome,
+        password,
+        inep
+      });
+      zona.setSenha(password)
+      zona.save().then(() => res.json({ zona: zona.enviarAuthJSON() }))
+    } catch (e) {
+      res.status(422).json({ errors: "Usuário já consta no banco" });
+      next(e)
+    }
+
 
   }
 
