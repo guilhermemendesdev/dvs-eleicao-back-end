@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
-const Usuario = mongoose.model("Usuario");
+const Zona = mongoose.model("Zona");
 
 const AdmValidation = {
     adm: (req, res, next) => {
         if (!req.payload.id) return res.sendStatus(401);
-        Usuario.findById(req.payload.id).then(usuario => {
-            if (!usuario) return res.sendStatus(401);
-            if (!usuario.role.includes("super-adm")) return res.sendStatus(401);
+        Zona.findById(req.payload.id).then(zona => {
+            if (!zona) return res.sendStatus(401);
+            if (!zona.role.includes("super-adm")) return res.sendStatus(401);
             next();
         }).catch(next);
     },

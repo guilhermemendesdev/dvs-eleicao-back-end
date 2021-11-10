@@ -25,9 +25,8 @@ const ZonaValidation = {
   store: {
     body: {
       nome: Joi.string().required(),
-      coordenador_geral: Joi.string().required(),
-      coordenador_pedagogico: Joi.string().required(),
-      diretor: Joi.string().required(),
+      inep: Joi.string().required(),
+      password: Joi.string().required()
     }
   },
 

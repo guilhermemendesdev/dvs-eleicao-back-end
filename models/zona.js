@@ -34,7 +34,6 @@ const ZonaSchema = new mongoose.Schema({
     type: String,
     lowercase: true,
     unique: true,
-    required: [true, 'não pode ficar vazio.'],
     index: true,
     //  match: [/\S+@\S+\.\S+\, 'é inválido.']
   },

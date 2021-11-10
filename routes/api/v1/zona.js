@@ -19,6 +19,4 @@ router.delete("/:id", auth.required, AdmValidation.adm, validate(ZonaValidation.
 router.get("/", zonaController.showAll); //testado
 router.get("/:id", auth.required, ZonaValidation.adm, validate(ZonaValidation.showAdm), zonaController.showAdm); //testado
 
-
-
 module.exports = router;
