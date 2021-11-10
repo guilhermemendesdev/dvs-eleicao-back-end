@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --timeout 2000 --exit",
+    "start": "nodemon",
     "dev": "set NODE_ENV=development && nodemon server.js",
     "build": "export NODE_ENV=production && pm2 start server.js --name=\"apiEleicao\""
   },
