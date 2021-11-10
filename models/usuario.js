@@ -18,7 +18,7 @@ const UsuarioSchema = new mongoose.Schema({
         index: true,
         //  match: [/\S+@\S+\.\S+\, 'é inválido.']
     },
-    permissao: {
+    role: {
         type: Array,
         default: ['adm']
     },
@@ -64,7 +64,7 @@ UsuarioSchema.methods.enviarAuthJSON = function () {
         _id: this._id,
         nome: this.nome,
         email: this.email,
-        role: this.permissao,
+        role: this.role,
         token: this.gerarToken()
     };
 };

@@ -12,7 +12,7 @@ const ZonaValidation = {
     if (!zona) return res.sendStatus(401);
     Zona.findById(req.payload.id).then(zona => {
       if (!zona) return res.sendStatus(401);
-      if (!zona.permissao.includes("adm")) return res.sendStatus(401);
+      if (!zona.role.includes("adm")) return res.sendStatus(401);
       next();
     }).catch(next);
   },

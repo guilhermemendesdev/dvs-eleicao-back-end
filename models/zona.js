@@ -53,7 +53,7 @@ const ZonaSchema = new mongoose.Schema({
   zona: {
     type: String
   },
-  permissao: {
+  role: {
     type: Array,
     default: ['adm']
   },
@@ -114,7 +114,7 @@ ZonaSchema.methods.enviarAuthJSON = function () {
     _id: this._id,
     nome: this.nome,
     email: this.email,
-    role: this.permissao,
+    role: this.role,
     acesso: this.acesso,
     token: this.gerarToken()
   };

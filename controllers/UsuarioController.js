@@ -22,7 +22,7 @@ class UsuarioController {
                     usuario: {
                         nome: usuario.nome,
                         email: usuario.email,
-                        permissao: usuario.permissao
+                        role: usuario.role
                     }
                 });
             }).catch(next);
