@@ -54,7 +54,7 @@ const ZonaSchema = new mongoose.Schema({
   },
   role: {
     type: Array,
-    default: ['adm']
+    default: ['super-adm']
   },
   acesso: {
     type: Number,
