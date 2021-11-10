@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const FuncionarioController = require("../../../controllers/FuncionarioController");
 const { ZonaValidation } = require("../../../controllers/validacoes/zonaValidation");
+const { AdmValidation } = require("../../../controllers/validacoes/admValidation");
 const { FuncionarioValidation } = require("../../../controllers/validacoes/funcionarioValidation");
 const upload = require('../../../config/multer');
 
@@ -15,6 +16,7 @@ router.get('/', auth.required, ZonaValidation.adm, funcionarioController.indexAd
 router.get('/:id', auth.required, ZonaValidation.adm, funcionarioController.showAdm);
 router.get("/search/:search", auth.required, ZonaValidation.adm, funcionarioController.searchAlunos);
 router.get('/lista/lista', funcionarioController.showAll);
+router.get('/lista/funcionarios/:id', auth.required, AdmValidation.adm, funcionarioController.showSuperAdm);
 // router.post("/", auth.required, AdmValidation.adm, validate(ZonaValidation.store), funcionarioController.store); //testado
 // router.put("/:id", auth.required, ZonaValidation.adm, validate(AlunoValidation.update), funcionarioController.update); //testado
 // router.delete("/:id", auth.required, AdmValidation.adm, validate(ZonaValidation.remove), funcionarioController.remove); //testado

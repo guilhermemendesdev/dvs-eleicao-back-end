@@ -72,6 +72,17 @@ class CandidatoController {
     }
   }
 
+  async showSuperAdm(req, res, next) {
+    try {
+      const zonaInep = await Zona.findOne({ _id: req.params.id })
+      const candidatos = await Candidato.find({ inep: zonaInep.inep });
+      return res.send({ candidatos });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+
   async searchProtocolo(req, res, next) {
     try {
       const candidato = await Candidato.findOne(

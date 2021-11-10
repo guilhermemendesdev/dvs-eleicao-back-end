@@ -3,6 +3,7 @@ const router = require("express").Router();
 const AlunoController = require("../../../controllers/AlunoController");
 const { ZonaValidation } = require("../../../controllers/validacoes/zonaValidation");
 const { AlunoValidation } = require("../../../controllers/validacoes/alunoValidation");
+const { AdmValidation } = require("../../../controllers/validacoes/admValidation");
 const upload = require('../../../config/multer');
 
 const validate = require("express-validation");
@@ -13,6 +14,7 @@ const alunoController = new AlunoController();
 // ADM
 router.get('/', auth.required, ZonaValidation.adm, alunoController.indexAdm);
 router.get('/lista', alunoController.showAll);
+router.get('/lista/alunos/:id', auth.required, AdmValidation.adm, alunoController.showSuperAdm);
 router.get('/:id', auth.required, ZonaValidation.adm, alunoController.showAdm);
 router.get('/inserir/votante', alunoController.inserirVotante);
 router.get("/search/:search", auth.required, ZonaValidation.adm, alunoController.searchAlunos);

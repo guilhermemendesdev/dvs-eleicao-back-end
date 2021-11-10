@@ -18,6 +18,17 @@ class FuncionarioController {
     }
   }
 
+  async showSuperAdm(req, res, next) {
+    try {
+      const zonaInep = await Zona.findOne({ _id: req.params.id })
+      const funcionarios = await Funcionario.find({ inep: zonaInep.inep });
+      return res.send({ funcionarios });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+
   //GERAR NUMERO DE IDESCOLA
 
   // async indexAdm(req, res, next) {

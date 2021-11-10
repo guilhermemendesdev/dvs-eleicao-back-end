@@ -3,6 +3,7 @@ const router = require("express").Router();
 const CandidatoController = require("../../../controllers/CandidatoController");
 const { CandidatoValidation } = require("../../../controllers/validacoes/candidatoValidation");
 const { ZonaValidation } = require("../../../controllers/validacoes/zonaValidation");
+const { AdmValidation } = require("../../../controllers/validacoes/admValidation");
 const { upload, uploadCandidato } = require('../../../config/multer')
 const multer = require('multer')
 
@@ -24,5 +25,6 @@ router.delete("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValid
 router.get("/protocolo", candidatoController.searchProtocolo); //testado
 router.get("/", auth.required, ZonaValidation.adm, candidatoController.showAll); //testado
 router.get("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.showAdm), candidatoController.showAdm); //testado
+router.get('/lista/candidatos/:id', auth.required, AdmValidation.adm, candidatoController.showSuperAdm);
 
 module.exports = router;

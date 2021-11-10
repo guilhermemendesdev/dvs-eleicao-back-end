@@ -16,6 +16,16 @@ class AlunoController {
     }
   }
 
+  async showSuperAdm(req, res, next) {
+    try {
+      const zonaInep = await Zona.findOne({ _id: req.params.id })
+      const alunos = await Aluno.find({ inep: zonaInep.inep });
+      return res.send({ alunos });
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async inserirVotante(req, res, next) {
     //const zona = req.payload.id
     try {

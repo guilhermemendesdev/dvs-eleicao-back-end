@@ -87,7 +87,7 @@ class ZonaController {
   // async update(req, res, next) {
   //   const { password } = req.body;
   //   try {
-  //     const zona = await Zona.findOne({inep: "52079341"}).then(item=>{
+  //     const zona = await Zona.findOne({ inep: "52128202" }).then(item => {
   //       item.setSenha('123456')
   //       item.acesso = 0
   //       item.save()
