@@ -63,16 +63,18 @@ class ZonaController {
     });
     zona.setSenha(password)
     zona.save().then(() => res.json({ zona: zona.enviarAuthJSON() }))
-    
+
   }
 
   async update(req, res, next) {
     const {
       password } = req.body;
     try {
+      console.log(req.payload.id)
       const zona = await Zona.findById(req.payload.id)
       console.log(zona.setSenha(password))
       if (password) zona.setSenha(password)
+      console.log('teste')
       zona.acesso = 1
       await zona.save();
       return res.send({ zona });
