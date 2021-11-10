@@ -53,17 +53,17 @@ class ZonaController {
   store(req, res, next) {
     const {
       nome,
-      coordenador_geral,
-      coordenador_pedagogico,
-      diretor
+      inep,
+      password
     } = req.body;
     const zona = new Zona({
       nome,
-      coordenador_geral,
-      coordenador_pedagogico,
-      diretor
+      password,
+      inep
     });
-    zona.save().then(() => res.send({ zona })).catch(next);
+    zona.setSenha(password)
+    zona.save().then(() => res.json({ zona: zona.enviarAuthJSON() }))
+    
   }
 
   async update(req, res, next) {
@@ -71,6 +71,7 @@ class ZonaController {
       password } = req.body;
     try {
       const zona = await Zona.findById(req.payload.id)
+      console.log(zona.setSenha(password))
       if (password) zona.setSenha(password)
       zona.acesso = 1
       await zona.save();
@@ -79,6 +80,21 @@ class ZonaController {
       next(e)
     }
   }
+
+  /*RESETAR SENHA DE UM INEP*/
+  // async update(req, res, next) {
+  //   const { password } = req.body;
+  //   try {
+  //     const zona = await Zona.findOne({inep: "52079341"}).then(item=>{
+  //       item.setSenha('123456')
+  //       item.acesso = 0
+  //       item.save()
+  //     })
+  //     return res.send({ zona });
+  //   } catch (e) {
+  //     next(e)
+  //   }
+  // }
 
 }
 

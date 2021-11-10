@@ -45,6 +45,23 @@ class FuncionarioController {
     }
   }
 
+  async showAll(req, res, next) {
+    try {
+      var lista = []
+      await Zona.find({}, '_id inep').then(async response => {
+        await Promise.all(response.map(async item => {
+          const funcionarioTotais = await Funcionario.count({ inep: item.inep })
+          const funcionarioVotantes = await Funcionario.count({ inep: item.inep })
+          lista.push({ unidade: item, qtd_alunos_total: funcionarioTotais, qtd_alunos_votantes: funcionarioVotantes })
+          return lista
+        }))
+      })
+      return res.send({ lista })
+    } catch (e) {
+      next(e)
+    }
+  }
+
   //GET /search/:search/pedidos
   async searchAlunos(req, res, next) {
     const { offset, limit } = req.query;
