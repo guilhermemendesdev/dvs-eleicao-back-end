@@ -24,7 +24,7 @@ app.use('/fotosCandidato', express.static(path.resolve(__dirname, "tmp", "doc__e
 const dbs = require("./config/database");
 
 // VERSÃO TESTE
-const dbURI = isProduction ? dbs.dbProduction : dbs.dbTest
+const dbURI = isProduction ? dbs.dbProduction : dbs.dbTeste
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 
 // SETUP EJS
