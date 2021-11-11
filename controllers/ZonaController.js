@@ -19,7 +19,7 @@ class ZonaController {
   //GET /:id
   async showAll(req, res, next) {
     try {
-      const zona = await Zona.find({ deletado: false }, '_id nome');
+      const zona = await Zona.find({ deletado: false }, '_id nome inep');
       return res.send({ zona });
     } catch (e) {
       next(e);
@@ -73,14 +73,13 @@ class ZonaController {
   }
 
   async update(req, res, next) {
-    const {
-      password } = req.body;
+    const { password } = req.body;
+    console.log(req.body)
     try {
       console.log(req.payload.id)
       const zona = await Zona.findById(req.payload.id)
-      console.log(zona.setSenha(password))
-      if (password) zona.setSenha(password)
-      console.log('teste')
+      console.log(typeof password)
+      if (password) zona.setSenha( password)
       zona.acesso = 1
       await zona.save();
       return res.send({ zona });
@@ -90,19 +89,19 @@ class ZonaController {
   }
 
   /*RESETAR SENHA DE UM INEP*/
-  // async update(req, res, next) {
-  //   const { password } = req.body;
-  //   try {
-  //     const zona = await Zona.findOne({ inep: "52128202" }).then(item => {
-  //       item.setSenha('123456')
-  //       item.acesso = 0
-  //       item.save()
-  //     })
-  //     return res.send({ zona });
-  //   } catch (e) {
-  //     next(e)
-  //   }
-  // }
+  async updateInep(req, res, next) {
+    const { inep } = req.body;
+    try {
+      const zona = await Zona.findOne({ inep: inep }).then(item => {
+        item.setSenha('123456')
+        item.acesso = 0
+        item.save()
+      })
+      return res.send({ zona });
+    } catch (e) {
+      next(e)
+    }
+  }
 
 }
 

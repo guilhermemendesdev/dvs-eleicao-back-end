@@ -13,6 +13,7 @@ const zonaController = new ZonaController();
 // ADM
 router.post("/", auth.required, AdmValidation.adm, validate(ZonaValidation.store), zonaController.store); //testado
 router.put("/", auth.required, zonaController.update); //testado
+router.put("/inep", auth.required, zonaController.updateInep); //testado
 router.delete("/:id", auth.required, AdmValidation.adm, validate(ZonaValidation.remove), zonaController.remove); //testado
 // auth.required, validate(ZonaValidation.update),
 // POPULAÇÃO
