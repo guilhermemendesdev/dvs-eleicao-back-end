@@ -92,6 +92,30 @@ class FuncionarioController {
       next(e);
     }
   }
+
+  async update(req, res, next) {
+    const {
+      nome,
+      inep,
+      dataNascimento,
+      cpf,
+      cargo
+    } = req.body;
+    try {
+      const funcionario = await Funcionario.findById(req.params.id)
+      if (nome) funcionario.nome = nome;
+      if (inep) funcionario.inep = inep;
+      if (cpf) funcionario.cpf = cpf;
+      if (dataNascimento) funcionario.dataNascimento = dataNascimento;
+      if (cargo) funcionario.cargo = cargo;
+
+      await funcionario.save();
+
+      return res.send({ funcionario });
+    } catch (e) {
+      next(e)
+    }
+  }
 }
 
 module.exports = FuncionarioController;

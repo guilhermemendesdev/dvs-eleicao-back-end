@@ -18,7 +18,7 @@ router.get("/search/:search", auth.required, ZonaValidation.adm, funcionarioCont
 router.get('/lista/lista', funcionarioController.showAll);
 router.get('/lista/funcionarios/:id', auth.required, AdmValidation.adm, funcionarioController.showSuperAdm);
 // router.post("/", auth.required, AdmValidation.adm, validate(ZonaValidation.store), funcionarioController.store); //testado
-// router.put("/:id", auth.required, ZonaValidation.adm, validate(AlunoValidation.update), funcionarioController.update); //testado
+router.put("/:id", auth.required, AdmValidation.adm, ZonaValidation.adm, funcionarioController.update); //testado
 // router.delete("/:id", auth.required, AdmValidation.adm, validate(ZonaValidation.remove), funcionarioController.remove); //testado
 
 // // POPULAÇÃO
