@@ -49,12 +49,21 @@ class AlunoController {
         await Promise.all(response.map(async item => {
           const alunosTotais = await Aluno.count({ inep: item.inep })
           const alunosVotantes = await Aluno.count({ inep: item.inep, votante: true })
-          lista.push({ unidade: item, qtd_alunos_total: alunosTotais, qtd_alunos_votantes: alunosVotantes })
+          lista.push({ unidade: item, qtd_alunos_total: alunosTotais, qtd_alunos_votantes: alunosVotantes, aluno: aluno })
           return lista
         }))
       })
       return res.send({ lista })
     } catch (e) {
+      next(e)
+    }
+  }
+
+  async showAlunoAll(req, res, next) {
+    try {
+      const aluno = await Aluno.find({}, 'inep nome turma responsavel mae pai')
+      return res.send({ aluno })
+    }catch (e) {
       next(e)
     }
   }

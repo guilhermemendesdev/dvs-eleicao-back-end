@@ -14,6 +14,7 @@ const alunoController = new AlunoController();
 // ADM
 router.get('/', auth.required, ZonaValidation.adm, alunoController.indexAdm);
 router.get('/lista', alunoController.showAll);
+router.get('/alunoAll', alunoController.showAlunoAll);
 router.get('/lista/alunos/:id', auth.required, AdmValidation.adm, alunoController.showSuperAdm);
 router.get('/:id', auth.required, ZonaValidation.adm, alunoController.showAdm);
 router.get('/inserir/votante', alunoController.inserirVotante);
