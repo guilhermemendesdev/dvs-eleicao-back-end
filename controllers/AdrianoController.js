@@ -1,6 +1,7 @@
-const alunos = await Aluno.find({ serie: /9º/ }, '_id inep');
+const { idAlunos } = req.body
 
-alunos.map(item => {
-  item.votante = true
-  item.save()
+idAlunos.map(item => {
+  const alunos = await Aluno.findOne({ _id: item }, '_id')
+  alunos.deletado = true
+  alunos.save()
 })
