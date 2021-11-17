@@ -1,7 +1,8 @@
 const { idAlunos } = req.body
 
-idAlunos.map(item => {
-  const alunos = await Aluno.findOne({ _id: item }, '_id')
+idAlunos.map(async item => {
+  const alunos = await Aluno.findOne({ _id: item }, '_id deletado')
+  console.log(alunos) //verifica se esta recebendo algo e oque esta recebendo
   alunos.deletado = true
-  alunos.save()
+  await alunos.save()
 })
