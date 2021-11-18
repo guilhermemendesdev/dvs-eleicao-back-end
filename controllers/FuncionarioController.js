@@ -28,6 +28,16 @@ class FuncionarioController {
     }
   }
 
+  async funcionarioInep(req, res, next) {
+    try {
+      console.log(req.params.inep)
+      const funcionarios = await Funcionario.find({ inep: req.params.inep });
+      return res.send({ funcionarios });
+    } catch (e) {
+      next(e);
+    }
+  }
+
 
   //GERAR NUMERO DE IDESCOLA
 
@@ -113,6 +123,24 @@ class FuncionarioController {
 
       return res.send({ funcionario });
     } catch (e) {
+      next(e)
+    }
+  }
+
+  async remove(req, res, next) {
+    try {
+      console.log(req.body)
+      const {ids, deletado} = req.body
+      console.log(ids)
+      console.log(deletado)
+      ids.map(async item=> {
+        const funcionario = await Funcionario.findOne(item)
+        funcionario.deletado = deletado
+        await funcionario.save()
+      })
+      return res.send({ deletado: false })
+    } catch (e) {
+      console.log(e)
       next(e)
     }
   }
