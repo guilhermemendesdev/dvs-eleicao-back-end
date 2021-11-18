@@ -106,6 +106,20 @@ class AlunoController {
     }
   }
 
+  async remove(req, res, next) {
+    try {
+      const idsBody = req.body.ids
+      idsBody.map(async item=> {
+        const aluno = await Aluno.findOne(item)
+        aluno.deletado = true
+        await aluno.save()
+      })
+      return res.send({ deletado: false })
+    } catch (e) {
+      console.log(e)
+      next(e)
+    }
+  }
 
   //GET /search/:search/pedidos
   async searchAlunos(req, res, next) {
