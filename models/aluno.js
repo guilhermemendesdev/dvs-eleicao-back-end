@@ -13,10 +13,10 @@ const AlunoSchema = new mongoose.Schema({
   nome: {
     type: String,
   },
-  dataNascimento: {
-    type: Date,
-    required: [true, "não pode ficar vazio"]
-  },
+  // dataNascimento: {
+  //   type: Date,
+  //   // required: [true, "não pode ficar vazio"]
+  // },
   serie: {
     type: String,
 

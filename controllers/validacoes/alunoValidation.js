@@ -28,7 +28,7 @@ const AlunoValidation = {
       zona: Joi.string().alphanum().length(24).required()
     },
     body: {
-      dt_nascimento: Joi.date().format("YYYY-MM-DD").raw().required(),
+      dt_nascimento: Joi.date().raw().required(),
       nome: Joi.string().required(),
       cpf: Joi.string().length(14).required(),
       email: Joi.string().email().required(),

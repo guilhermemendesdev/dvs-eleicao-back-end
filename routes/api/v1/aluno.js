@@ -13,6 +13,7 @@ const alunoController = new AlunoController();
 
 // ADM
 router.get('/', auth.required, ZonaValidation.adm, alunoController.indexAdm);
+router.get('/alunoInep', auth.required, ZonaValidation.adm, alunoController.alunoInep);
 router.get('/lista', alunoController.showAll);
 router.get('/alunoAll', alunoController.showAlunoAll);
 router.get('/lista/alunos/:id', auth.required, AdmValidation.adm, alunoController.showSuperAdm);
@@ -21,7 +22,7 @@ router.get('/inserir/votante', alunoController.inserirVotante);
 router.get("/search/:search", auth.required, ZonaValidation.adm, alunoController.searchAlunos);
 // router.post("/", auth.required, AdmValidation.adm, validate(ZonaValidation.store), alunoController.store); //testado
 // router.put("/:id", auth.required, ZonaValidation.adm, validate(AlunoValidation.update), alunoController.update); //testado
-// router.delete("/:id", auth.required, AdmValidation.adm, validate(ZonaValidation.remove), alunoController.remove); //testado
+router.delete("/", alunoController.remove); //testado
 
 // // POPULAÇÃO
 // router.get("/", validate(ZonaValidation.adm), alunoController.showAll); //testado

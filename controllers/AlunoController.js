@@ -16,6 +16,16 @@ class AlunoController {
     }
   }
 
+  async alunoInep(req, res, next) {
+    try {
+      const {inep } = req.body
+      const alunos = await Aluno.find({ inep: inep });
+      return res.send({ alunos });
+    } catch (e) {
+      next(e);
+    }
+  }
+  
   async showSuperAdm(req, res, next) {
     try {
       const zonaInep = await Zona.findOne({ _id: req.params.id })
@@ -63,7 +73,7 @@ class AlunoController {
     try {
       const aluno = await Aluno.find({}, 'inep nome turma responsavel mae pai')
       return res.send({ aluno })
-    }catch (e) {
+    } catch (e) {
       next(e)
     }
   }
@@ -95,6 +105,7 @@ class AlunoController {
       next(e)
     }
   }
+
 
   //GET /search/:search/pedidos
   async searchAlunos(req, res, next) {
