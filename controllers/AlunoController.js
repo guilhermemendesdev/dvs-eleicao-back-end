@@ -108,10 +108,13 @@ class AlunoController {
 
   async remove(req, res, next) {
     try {
-      const idsBody = req.body.ids
-      idsBody.map(async item=> {
+      console.log(req.body)
+      const {ids, deletado} = req.body
+      console.log(ids)
+      console.log(deletado)
+      ids.map(async item=> {
         const aluno = await Aluno.findOne(item)
-        aluno.deletado = true
+        aluno.deletado = deletado
         await aluno.save()
       })
       return res.send({ deletado: false })
