@@ -12,11 +12,11 @@ const FuncionarioSchema = new mongoose.Schema({
     type: String,
     required: [true, "não pode ficar vazio."]
   },
-  idescola: {
-    type: Schema.Types.ObjectId,
-    ref: "Zona",
-    required: true
-  },
+  // idescola: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "Zona",
+  //   required: true
+  // },
   cargo: {
     type: String,
     required: [true, "não pode ficar vazio."]
