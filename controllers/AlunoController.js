@@ -18,8 +18,7 @@ class AlunoController {
 
   async alunoInep(req, res, next) {
     try {
-      const {inep } = req.body
-      const alunos = await Aluno.find({ inep: inep });
+      const alunos = await Aluno.find({ inep: req.params.inep });
       return res.send({ alunos });
     } catch (e) {
       next(e);

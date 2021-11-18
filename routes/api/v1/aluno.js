@@ -13,7 +13,7 @@ const alunoController = new AlunoController();
 
 // ADM
 router.get('/', auth.required, ZonaValidation.adm, alunoController.indexAdm);
-router.get('/alunoInep', auth.required, ZonaValidation.adm, alunoController.alunoInep);
+router.get('/alunoInep/:inep', auth.required, ZonaValidation.adm, alunoController.alunoInep);
 router.get('/lista', alunoController.showAll);
 router.get('/alunoAll', alunoController.showAlunoAll);
 router.get('/lista/alunos/:id', auth.required, AdmValidation.adm, alunoController.showSuperAdm);
