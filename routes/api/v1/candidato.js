@@ -25,6 +25,7 @@ router.delete("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValid
 router.get("/protocolo", candidatoController.searchProtocolo); //testado
 router.get("/", auth.required, ZonaValidation.adm, candidatoController.showAll); //testado
 router.get("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.showAdm), candidatoController.showAdm); //testado
-router.get('/lista/candidatos/:id', auth.required, AdmValidation.adm, candidatoController.showSuperAdm);
+// router.get('/lista/candidatos/:id', auth.required, AdmValidation.adm, candidatoController.showSuperAdm);
+router.get('/lista/candidatos/', auth.required, AdmValidation.adm, candidatoController.showSuperAdm);
 
 module.exports = router;
