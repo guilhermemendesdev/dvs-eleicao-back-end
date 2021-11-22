@@ -20,9 +20,11 @@ router.get('/lista/alunos/:id', auth.required, AdmValidation.adm, alunoControlle
 router.get('/:id', auth.required, ZonaValidation.adm, alunoController.showAdm);
 router.get('/inserir/votante', alunoController.inserirVotante);
 router.get("/search/:search", auth.required, ZonaValidation.adm, alunoController.searchAlunos);
+router.post("/", alunoController.addAluno); //testado
 // router.post("/", auth.required, AdmValidation.adm, validate(ZonaValidation.store), alunoController.store); //testado
 // router.put("/:id", auth.required, ZonaValidation.adm, validate(AlunoValidation.update), alunoController.update); //testado
 router.delete("/", alunoController.remove); //testado
+router.delete("/removerPorNome", alunoController.removeNome); //testado
 
 // // POPULAÇÃO
 // router.get("/", validate(ZonaValidation.adm), alunoController.showAll); //testado

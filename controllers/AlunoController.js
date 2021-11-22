@@ -124,6 +124,44 @@ class AlunoController {
     }
   }
 
+  async addAluno(req, res, next) {
+    try {
+      console.log(req.body)
+      const {alunos} = req.body
+      alunos.map(async item => {
+        const {nome, inep, mae, pai, responsavel, serie, turma } = item
+        const aluno = new Aluno({nome, inep, mae, pai, responsavel, serie, turma});
+        aluno.save()
+      })
+      return res.send({ message: "alunos adicionados" })
+    } catch (e) {
+      console.log(e)
+      next(e)
+    }
+  }
+
+  async removeNome(req, res, next) {
+    try {
+      console.log(req.body)
+      const {nomes} = req.body
+      const alunosNaoDeletados = []
+      await Promise.all(nomes.map(async (item) => {
+        const aluno = await Aluno.findOne({nome: item.nome}).collation({locale: "en", strength: 1})
+        if(aluno) {
+          aluno.deletado = true
+          await aluno.save()
+        }
+        else {
+          alunosNaoDeletados.push(item)
+        }
+      }));
+      return res.send({ alunos: alunosNaoDeletados })
+    } catch (e) {
+      console.log(e)
+      next(e)
+    }
+  }
+
   //GET /search/:search/pedidos
   async searchAlunos(req, res, next) {
     const { offset, limit } = req.query;
