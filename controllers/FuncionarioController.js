@@ -127,6 +127,22 @@ class FuncionarioController {
     }
   }
 
+  async addFuncionario(req, res, next) {
+    try {
+      console.log(req.body)
+      const {funcionarios} = req.body
+      funcionarios.map(async item => {
+        const {nome, inep, cargo, } = item
+        const funcionario = new Funcionario({nome, inep, cargo});
+        funcionario.save()
+      })
+      return res.send({ message: "funcionarios adicionados" })
+    } catch (e) {
+      console.log(e)
+      next(e)
+    }
+  }
+
   async remove(req, res, next) {
     try {
       console.log(req.body)
