@@ -9,7 +9,7 @@ class AlunoController {
   async indexAdm(req, res, next) {
     try {
       const zonaInep = await Zona.findOne({ _id: req.payload.id })
-      const alunos = await Aluno.find({ inep: zonaInep.inep });
+      const alunos = await Aluno.find({ deletado: false, inep: zonaInep.inep });
       return res.send({ alunos });
     } catch (e) {
       next(e);
@@ -25,7 +25,7 @@ class AlunoController {
       next(e);
     }
   }
-  
+
   async showSuperAdm(req, res, next) {
     try {
       const zonaInep = await Zona.findOne({ _id: req.params.id })
@@ -109,10 +109,10 @@ class AlunoController {
   async remove(req, res, next) {
     try {
       console.log(req.body)
-      const {ids, deletado} = req.body
+      const { ids, deletado } = req.body
       console.log(ids)
       console.log(deletado)
-      ids.map(async item=> {
+      ids.map(async item => {
         const aluno = await Aluno.findOne(item)
         aluno.deletado = deletado
         await aluno.save()
@@ -127,10 +127,10 @@ class AlunoController {
   async addAluno(req, res, next) {
     try {
       console.log(req.body)
-      const {alunos} = req.body
+      const { alunos } = req.body
       alunos.map(async item => {
-        const {nome, inep, mae, pai, responsavel, serie, turma } = item
-        const aluno = new Aluno({nome, inep, mae, pai, responsavel, serie, turma});
+        const { nome, inep, mae, pai, responsavel, serie, turma } = item
+        const aluno = new Aluno({ nome, inep, mae, pai, responsavel, serie, turma });
         aluno.save()
       })
       return res.send({ message: "alunos adicionados" })
@@ -143,11 +143,11 @@ class AlunoController {
   async removeNome(req, res, next) {
     try {
       console.log(req.body)
-      const {nomes} = req.body
+      const { nomes } = req.body
       const alunosNaoDeletados = []
       await Promise.all(nomes.map(async (item) => {
-        const aluno = await Aluno.findOne({nome: item.nome}).collation({locale: "en", strength: 1})
-        if(aluno) {
+        const aluno = await Aluno.findOne({ nome: item.nome }).collation({ locale: "en", strength: 1 })
+        if (aluno) {
           aluno.deletado = true
           await aluno.save()
         }
