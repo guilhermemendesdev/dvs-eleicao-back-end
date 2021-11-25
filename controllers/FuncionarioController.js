@@ -11,7 +11,7 @@ class FuncionarioController {
   async indexAdm(req, res, next) {
     try {
       const zonaInep = await Zona.findOne({ _id: req.payload.id })
-      const funcionarios = await Funcionario.find({ deletado: false, inep: zonaInep.inep });
+      const funcionarios = await Funcionario.find({ deletado: false, inep: zonaInep.inep }).collation({ locale: "en", strength: 1 }).sort({ nome: 1 });
       return res.send({ funcionarios });
     } catch (e) {
       next(e);
@@ -30,7 +30,6 @@ class FuncionarioController {
 
   async funcionarioInep(req, res, next) {
     try {
-      console.log(req.params.inep)
       const funcionarios = await Funcionario.find({ inep: req.params.inep });
       return res.send({ funcionarios });
     } catch (e) {
@@ -129,7 +128,6 @@ class FuncionarioController {
 
   async addFuncionario(req, res, next) {
     try {
-      console.log(req.body)
       const { funcionarios } = req.body
       funcionarios.map(async item => {
         const { nome, inep, cargo, } = item
@@ -145,10 +143,7 @@ class FuncionarioController {
 
   async remove(req, res, next) {
     try {
-      console.log(req.body)
       const { ids, deletado } = req.body
-      console.log(ids)
-      console.log(deletado)
       ids.map(async item => {
         const funcionario = await Funcionario.findOne(item)
         funcionario.deletado = deletado

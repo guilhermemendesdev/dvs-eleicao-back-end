@@ -9,7 +9,8 @@ class AlunoController {
   async indexAdm(req, res, next) {
     try {
       const zonaInep = await Zona.findOne({ _id: req.payload.id })
-      const alunos = await Aluno.find({ deletado: false, inep: zonaInep.inep });
+      const alunos = await Aluno.find({ deletado: false, inep: zonaInep.inep }).collation({ locale: "en", strength: 1 }).sort({ nome: 1 });
+
       return res.send({ alunos });
     } catch (e) {
       next(e);
@@ -19,7 +20,7 @@ class AlunoController {
   async alunoInep(req, res, next) {
     try {
       const alunos = await Aluno.find({ inep: req.params.inep });
-      console.log(alunos)
+
       return res.send({ alunos });
     } catch (e) {
       next(e);
@@ -40,7 +41,7 @@ class AlunoController {
     //const zona = req.payload.id
     try {
       const alunos = await Aluno.find(
-        { serie: /9º/ }
+        { serie: /Sem/ }
       );
       alunos.map(item => {
         item.votante = true
@@ -108,10 +109,7 @@ class AlunoController {
 
   async remove(req, res, next) {
     try {
-      console.log(req.body)
       const { ids, deletado } = req.body
-      console.log(ids)
-      console.log(deletado)
       ids.map(async item => {
         const aluno = await Aluno.findOne(item)
         aluno.deletado = deletado
@@ -126,11 +124,10 @@ class AlunoController {
 
   async addAluno(req, res, next) {
     try {
-      console.log(req.body)
       const { alunos } = req.body
       alunos.map(async item => {
-        const { nome, inep, mae, pai, responsavel, serie, turma } = item
-        const aluno = new Aluno({ nome, inep, mae, pai, responsavel, serie, turma });
+        const { nome, inep, mae, pai, responsavel, serie, turma, votante } = item
+        const aluno = new Aluno({ nome, inep, mae, pai, responsavel, serie, turma, votante });
         aluno.save()
       })
       return res.send({ message: "alunos adicionados" })
@@ -142,7 +139,6 @@ class AlunoController {
 
   async removeNome(req, res, next) {
     try {
-      console.log(req.body)
       const { nomes } = req.body
       const alunosNaoDeletados = []
       await Promise.all(nomes.map(async (item) => {

@@ -2,7 +2,6 @@ const fs = require('fs'),
   sharp = require('sharp');
 
 exports.compressImage = (file, size) => {
-  console.log(file)
   const newPath = file.path.split('.')[0] + '.webp';
   const fileName = file.filename.split('.')[0] + '.webp'
 

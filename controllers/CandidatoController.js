@@ -84,7 +84,7 @@ class CandidatoController {
 
   async showSuperAdm(req, res, next) {
     try {
-      const candidatos = await Candidato.find({});
+      const candidatos = await Candidato.find({}).collation({ locale: "en", strength: 1 }).sort({ nome: 1 });
       return res.send({ candidatos });
     } catch (e) {
       next(e);

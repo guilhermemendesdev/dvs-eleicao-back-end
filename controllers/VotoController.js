@@ -27,12 +27,12 @@ class VotoController {
     }
 
     try {
-      if (tipoVoto === 'aluno' || tipoVoto === 'resp') {
+      if (tipoVoto === 'aluno' || tipoVoto === 'respAlunoVotante' || tipoVoto === 'respAlunoNaoVotante') {
         const aluno = await Aluno.findOne({ _id: idVotante })
         if (tipoVoto === 'aluno' && aluno.aluno_votou === true) throw badRequest('Aluno já votou!')
-        if (tipoVoto === 'resp' && aluno.resp_votou === true) throw badRequest('Responsável já votou!')
+        if ((tipoVoto === 'respAlunoVotante' || tipoVoto === 'respAlunoNaoVotante') && aluno.resp_votou === true) throw badRequest('Responsável já votou!')
         if (tipoVoto === 'aluno') aluno.aluno_votou = true
-        if (tipoVoto === 'resp') aluno.resp_votou = true
+        if ((tipoVoto === 'respAlunoVotante' || tipoVoto === 'respAlunoNaoVotante')) aluno.resp_votou = true
         await aluno.save();
       }
 
