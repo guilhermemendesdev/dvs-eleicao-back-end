@@ -90,6 +90,7 @@ class UsuarioController {
     // }
     async login(req, res, next) {
         const { inep, password } = req.body;
+        console.log(`Minha senha é: ${password} e meu inep é: ${inep}`)
         await Zona.findOne({ inep }).then((usuario) => {
             if (!usuario) return res.status(401).json({ errors: "Usuario não registrado" });
             if (!usuario.validarSenha(password)) return res.status(401).json({ errors: "Senha inválida" });
