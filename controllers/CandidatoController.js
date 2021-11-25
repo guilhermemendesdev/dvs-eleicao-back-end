@@ -48,6 +48,27 @@ class CandidatoController {
     }
   }
 
+  //GET/candidatoZona/:zonaId
+  async candidatoZona(req, res, next) {
+    try {
+      const candidatos = await Candidato.find({ zona: req.params.zonaId });
+      return res.send({ candidatos });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  //GET/candidatoId/:id
+  async candidatoId(req, res, next) {
+    try {
+      const candidato = await Candidato.find({ _id: req.params.id });
+
+      return res.send({ candidato });
+    } catch (e) {
+      next(e);
+    }
+  }
+
   //GET
   async showAdm(req, res, next) {
     const zona = req.payload.id;
