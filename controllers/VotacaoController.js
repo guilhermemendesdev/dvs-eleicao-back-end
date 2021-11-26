@@ -32,6 +32,19 @@ class CandidatoController {
     }
   }
 
+  async showAdm(req, res, next) {
+    try {
+      const votacao = await Votacao.findOne({ zona: req.params.id })
+        .populate({
+          path: 'voto',
+          populate: { path: 'candidato' }
+        });
+      return res.send({ votacao });
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async finalizarVotacao(req, res, next) {
     const votacao = await Votacao.findOne({ _id: req.params.id })
     const { candidato, porcentagem, status, confirmado } = req.body
