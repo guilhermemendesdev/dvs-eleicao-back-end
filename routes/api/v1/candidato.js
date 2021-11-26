@@ -23,6 +23,7 @@ router.put('/docs/:id', auth.required, ZonaValidation.adm, validate(CandidatoVal
 router.put("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.update); //testado
 router.delete("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.remove); //testado
 router.get("/protocolo", candidatoController.searchProtocolo); //testado
+router.put("/inserir/numero", candidatoController.inserirNumero); //testado
 router.get("/", auth.required, ZonaValidation.adm, candidatoController.showAll); //testado
 router.get("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.showAdm), candidatoController.showAdm); //testado
 // router.get('/lista/candidatos/:id', auth.required, AdmValidation.adm, candidatoController.showSuperAdm);

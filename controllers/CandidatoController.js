@@ -30,6 +30,57 @@ class CandidatoController {
     }
   }
 
+  async inserirNumero(req, res, next) {
+    try {
+      const candidato = await Candidato.find();
+      candidato.map(async item => {
+        item.numero_candidato = 1
+        await item.save()
+      })
+      return res.send({ candidato });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async inserirCandidatoBrancoNulo(req, res, next) {
+    try {
+      const candidato = new Candidato({
+        cpf: dadosCandidato.cpf,
+        nome: "Branco",
+        email: dadosCandidato.email,
+        telefone: dadosCandidato.telefone,
+        // dt_nascimento: dadosCandidato.dt_nascimento,
+        // rg: dadosCandidato.rg,
+        // endereco: dadosCandidato.endereco,
+        cargo: dadosCandidato.cargo,
+        funcao: dadosCandidato.funcao,
+        matricula: dadosCandidato.matricula,
+        // graduacao: dadosCandidato.graduacao,
+        //curso_graduacao: dadosCandidato.curso_graduacao,
+        //pos_graduacao: dadosCandidato.pos_graduacao,
+        //curso_pos_graduacao: dadosCandidato.curso_pos_graduacao,
+        // mestrado: dadosCandidato.mestrado,
+        // curso_mestrado: dadosCandidato.curso_mestrado,
+        // doutorado: dadosCandidato.doutorado,
+        // curso_doutorado: dadosCandidato.curso_doutorado,
+        curso_gestor: dadosCandidato.curso_gestor,
+        obs_curso_gestor: dadosCandidato.obs_curso_gestor,
+        //outros_cursos: dadosCandidato.outros_cursos,
+        data_entrada_inst: dadosCandidato.data_entrada_inst,
+        data_entrada_docencia: dadosCandidato.data_entrada_docencia,
+        tempo_modulacao: calculaTempo(moment(dadosCandidato.data_entrada_inst).format('DD/MM/YYYY')),
+        tempo_docencia: calculaTempo(moment(dadosCandidato.data_entrada_docencia).format('DD/MM/YYYY')),
+        numero_candidato: dadosCandidato.numero_candidato,
+        protocolo: `EDU${numRandom}2021`,
+        zona: dadosCandidato.zona
+      })
+      return res.send({ candidato });
+    } catch (e) {
+      next(e);
+    }
+  }
+
   //GET /:id
   async showAll(req, res, next) {
     const { offset, limit } = req.query;
