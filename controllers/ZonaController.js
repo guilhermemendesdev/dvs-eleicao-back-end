@@ -75,12 +75,14 @@ class ZonaController {
   async update(req, res, next) {
     const { password } = req.body;
     try {
-      const zona = await Zona.findById(req.payload.id)
+      const zona = await Zona.findOne({ _id: req.payload.id })
       if (password) zona.setSenha(password)
       zona.acesso = 1
+
       await zona.save();
       return res.send({ zona });
     } catch (e) {
+      console.log(e)
       next(e)
     }
   }
