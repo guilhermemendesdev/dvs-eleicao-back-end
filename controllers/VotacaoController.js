@@ -45,14 +45,36 @@ class CandidatoController {
     }
   }
 
+  async showVotacaoFinalizada(req, res, next) {
+    try {
+      const votacao = await Votacao.find({ status: { $ne: null } }, 'resultado status')
+        .populate({
+          path: 'resultado.candidato',
+          model: 'Candidato',
+          select: 'nome foto zona cpf'
+        }).populate({
+          path: 'zona',
+          model: 'Zona',
+          select: 'nome'
+        }
+        )
+      return res.send({ votacao });
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async finalizarVotacao(req, res, next) {
-    const votacao = await Votacao.findOne({ _id: req.params.id })
+    const votacao = await Votacao.findOne({ zona: req.params.id })
+
     const { candidato, porcentagem, status, confirmado } = req.body
     try {
       votacao.confirmado = confirmado
       votacao.resultado.candidato = candidato
       votacao.resultado.porcentagem = porcentagem
       votacao.status = status
+      console.log(votacao)
+      votacao.markModified('resultado')
       votacao.save()
       res.send({ votacao })
     } catch (e) {
@@ -60,24 +82,24 @@ class CandidatoController {
     }
   }
 
-  async showResultado(req, res, next) {
-    try {
-      const resultado = await Votacao.find({ confirmado: true }, 'resultado zona').populate({
-        path: 'resultado.candidato',
-        model: 'Candidato',
-        select: 'nome foto cpf'
-      }).populate({
-        path: 'zona',
-        model: 'Zona',
-        select: 'nome'
-      }
-      )
+  // async showResultado(req, res, next) {
+  //   try {
+  //     const resultado = await Votacao.find({ confirmado: true }, 'resultado zona').populate({
+  //       path: 'resultado.candidato',
+  //       model: 'Candidato',
+  //       select: 'nome foto cpf'
+  //     }).populate({
+  //       path: 'zona',
+  //       model: 'Zona',
+  //       select: 'nome'
+  //     }
+  //     )
 
-      res.send({ resultado })
-    } catch (e) {
-      next(e)
-    }
-  }
+  //     res.send({ resultado })
+  //   } catch (e) {
+  //     next(e)
+  //   }
+  // }
 
   //GET
   // async showAdm(req, res, next) {

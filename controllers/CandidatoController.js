@@ -99,6 +99,20 @@ class CandidatoController {
     }
   }
 
+  async AddCpfCandidato(req, res, next) {
+    try {
+      const candidato = await Candidato.find({ nome: 'Branco' });
+
+      candidato.map(async item => {
+        item.cpf = '000.000.000-00'
+        await item.save()
+      })
+      return res.send({ candidato });
+    } catch (e) {
+      next(e);
+    }
+  }
+
   //GET/candidatoZona/:zonaId
   async candidatoZona(req, res, next) {
     try {
@@ -113,7 +127,7 @@ class CandidatoController {
   async candidatoId(req, res, next) {
     try {
       const candidato = await Candidato.find({ _id: req.params.id });
-
+      console.log(req.params.id)
       return res.send({ candidato });
     } catch (e) {
       next(e);

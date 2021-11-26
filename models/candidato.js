@@ -6,8 +6,8 @@ const mongoosePaginate = require("mongoose-paginate");
 const CandidatoSchema = new mongoose.Schema({
   cpf: {
     type: String,
-    unique: [true, 'CPF já consta no banco'],
-    required: [true, "não pode ficar vazio."]
+    // unique: [true, 'CPF já consta no banco'],
+    // required: [true, "não pode ficar vazio."]
   },
   nome: {
     type: String,
@@ -117,7 +117,7 @@ const CandidatoSchema = new mongoose.Schema({
   },
   protocolo: {
     type: String,
-    required: [true, "não pode ficar vazio."]
+    //required: [true, "não pode ficar vazio."]
   },
   zona: {
     type: Schema.Types.ObjectId,

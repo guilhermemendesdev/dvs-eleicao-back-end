@@ -24,9 +24,10 @@ router.put("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidati
 router.delete("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.update), candidatoController.remove); //testado
 router.get("/protocolo", candidatoController.searchProtocolo); //testado
 router.put("/inserir/numero", candidatoController.inserirNumero); //testado
+router.put("/inserir/cpf/candidato", candidatoController.AddCpfCandidato); //testado
 router.get("/", auth.required, ZonaValidation.adm, candidatoController.showAll); //testado
 router.get("/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.showAdm), candidatoController.showAdm); //testado
-router.get("/candidatoId/:id", auth.required, ZonaValidation.adm, validate(CandidatoValidation.showAdm), candidatoController.candidatoId); //testado
+router.get("/candidatoId/:id", auth.required, AdmValidation.adm, candidatoController.candidatoId); //testado
 router.get('/candidatoZona/:zonaId', auth.required, AdmValidation.adm, candidatoController.candidatoZona);
 // router.get('/lista/candidatos/:id', auth.required, AdmValidation.adm, candidatoController.showSuperAdm);
 router.get('/lista/candidatos/', auth.required, AdmValidation.adm, candidatoController.showSuperAdm);
