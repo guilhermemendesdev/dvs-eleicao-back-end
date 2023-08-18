@@ -1,4 +1,4 @@
 {
-    "dbTeste": "mongodb://10.10.100.64:27017/eleicao-teste",
-    "dbProduction": "mongodb://10.10.100.64:27017/eleicao"
+    "dbTeste": "mongodb://adrianobarbosa:aa147258@10.10.100.64:27017/eleicao?authSource=admin",
+    "dbProduction": "mongodb://adrianobarbosa:aa147258@10.10.100.64:27017/eleicao?authSource=admin"
 }
