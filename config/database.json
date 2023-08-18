@@ -1,4 +1,4 @@
 {
-    "dbTeste": "mongodb://10.10.100.42:27017/eleicao-tst",
-    "dbProduction": "mongodb://10.10.100.42:27017/eleicao-tst"
+    "dbTeste": "mongodb://10.10.100.64:27017/eleicao-teste",
+    "dbProduction": "mongodb://10.10.100.64:27017/eleicao"
 }
